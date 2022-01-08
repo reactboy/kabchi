@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "kabchi-app",
   "private": true,
   "scripts": {
     "dev": "next dev",
