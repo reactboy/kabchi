@@ -1,23 +1,14 @@
-import { AppProps } from "next/app"
-import { ChakraProvider } from "@chakra-ui/provider"
-import { extendTheme } from "@chakra-ui/react"
+import { AppProps } from "next/app";
+import { ChakraProvider } from "@chakra-ui/provider";
 
-const colors = {
-
-}
-
-const fonts = {
-
-}
-
-const theme = extendTheme({ colors, fonts })
+import { theme } from "utils/chakra";
 
 const Kabchi = ({ Component, pageProps }: AppProps) => {
-  return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  )
-}
+    return (
+        <ChakraProvider theme={theme}>
+            <Component {...pageProps} />
+        </ChakraProvider>
+    );
+};
 
-export default Kabchi
+export default Kabchi;
