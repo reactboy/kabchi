@@ -1,6 +1,18 @@
 import { extendTheme } from "@chakra-ui/react";
 import '@fontsource/lato'
 
+const styles = {
+    global: (_props)=>({
+        'html, body': {
+            bg: 'bgLight',
+            color: 'kbviolet.900'
+        },
+        '*, *::before, *::after': {
+            color: 'inherit'
+        }
+    })
+}
+
 const colors = {
     kbpurple: {
         50: "#E7E7ED",
@@ -62,6 +74,7 @@ const colors = {
         800: "#857071",
         900: "#796163",
     },
+    bgLight: '#F7F7F7'
 };
 
 const fonts = {
@@ -69,4 +82,4 @@ const fonts = {
     heading: "'Lato', sans-serif",
 };
 
-export const theme = extendTheme({ colors, fonts });
+export const theme = extendTheme({styles, colors, fonts });
