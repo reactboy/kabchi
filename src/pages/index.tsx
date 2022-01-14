@@ -1,18 +1,14 @@
-import Head from 'next/head'
-import { Heading, Box } from '@chakra-ui/react'
+import { AppLayout } from 'components/layout'
 
 const Home = () => {
   return (
-    <>
-      <Head>
-        <title>kabchi</title>
-        <meta name="description" content="kabchi" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Box>
-        <Heading as="h1">kabchi</Heading>
-      </Box>
-    </>
+    <AppLayout>
+      <div>
+        <p>slowly but surely</p>
+        <p>achieve your goal</p>
+        <p>with kabchi</p>
+      </div>
+    </AppLayout>
   )
 }
 
