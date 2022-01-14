@@ -1,5 +1,7 @@
 import Head from 'next/head'
-import { Heading, Box } from '@chakra-ui/react'
+import { Heading } from '@chakra-ui/react'
+
+import { AppLayout } from 'components/layout'
 
 const Home = () => {
   return (
@@ -9,9 +11,11 @@ const Home = () => {
         <meta name="description" content="kabchi" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
-        <Heading as="h1">kabchi</Heading>
-      </Box>
+      <AppLayout>
+        <Heading as="h1" color="kbpurple.900">
+          kabchi
+        </Heading>
+      </AppLayout>
     </>
   )
 }
