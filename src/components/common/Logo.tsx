@@ -13,12 +13,12 @@ type LogoImage = {
 
 const IMAGE: LogoImage = {
   light: {
-    text: 'assets/logo/text-light.svg',
-    icon: 'assets/logo/icon-light.svg',
+    text: '/assets/logo/text-light.svg',
+    icon: '/assets/logo/icon-light.svg',
   },
   dark: {
-    text: 'assets/logo/text-dark.svg',
-    icon: 'assets/logo/icon-dark.svg',
+    text: '/assets/logo/text-dark.svg',
+    icon: '/assets/logo/icon-dark.svg',
   },
 }
 
