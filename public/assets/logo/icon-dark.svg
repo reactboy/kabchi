@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="66.762" height="66.762" viewBox="0 0 66.762 66.762">
+  <defs>
+    <radialGradient id="radial-gradient" cx="0.5" cy="0.5" r="0.707" gradientTransform="translate(0.5 1.207) rotate(-135)" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#292a49"/>
+      <stop offset="0.443" stop-color="#525491"/>
+      <stop offset="1" stop-color="#292a49"/>
+    </radialGradient>
+  </defs>
+  <g id="Logo_Icon_dark" data-name="Logo Icon dark" transform="translate(-594.738 -66.738)">
+    <g id="Group_24" data-name="Group 24" transform="translate(98 42)">
+      <path id="Path_6" data-name="Path 6" d="M0,0H66.762V66.762H0Z" transform="translate(496.738 24.738)" fill="#fff"/>
+      <path id="Path_5" data-name="Path 5" d="M0,0H61.8L0,61.8Z" transform="translate(499.221 27.221)" fill="url(#radial-gradient)"/>
+    </g>
+    <text id="kabchi" transform="translate(614.5 130.5)" fill="#270b3b" font-size="14" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="0" y="0">kabchi</tspan></text>
+  </g>
+</svg>
