@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import { VStack, Flex, Box, StackProps } from '@chakra-ui/react'
+import { VStack, Flex, Box, StackProps, FlexProps } from '@chakra-ui/react'
 
 import { AppHeader } from 'components/layout'
 import { WIDTH } from 'styles'
@@ -14,6 +14,7 @@ const FAVICON = {
 type Props = {
   title?: string
   description?: string
+  innerOptions?: FlexProps
 } & StackProps
 
 export const AppLayout: FC<Props> = (props) => {
@@ -22,6 +23,7 @@ export const AppLayout: FC<Props> = (props) => {
     title,
     description = DEFAULT['descriptoin'],
     maxW = WIDTH['pc-base'],
+    innerOptions = {},
     ...restProps
   } = props
 
@@ -37,7 +39,7 @@ export const AppLayout: FC<Props> = (props) => {
       </Head>
       <VStack h="100vh" px={2} py={0} {...restProps} maxW={maxW}>
         <AppHeader />
-        <Flex direction="column" flex="1" w="100%">
+        <Flex direction="column" flex="1" w="100%" {...innerOptions}>
           {children}
         </Flex>
         <Box w="100%">footer</Box>
