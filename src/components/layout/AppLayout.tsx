@@ -2,7 +2,7 @@ import { FC } from 'react'
 import Head from 'next/head'
 import { VStack, Flex, Box, StackProps, FlexProps } from '@chakra-ui/react'
 
-import { AppHeader } from 'components/layout'
+import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
 import { DEFAULT } from 'utils/constants'
 
@@ -42,8 +42,10 @@ export const AppLayout: FC<Props> = (props) => {
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
           {children}
         </Flex>
-        <Box w="100%">footer</Box>
       </VStack>
+      <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
+        <AppNavigation />
+      </Flex>
     </>
   )
 }
