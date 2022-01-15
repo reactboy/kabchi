@@ -10,13 +10,14 @@ import {
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 
 import { Logo } from 'components/common'
+import { WIDTH } from 'styles'
 
 export const AppNavigation = () => {
   const router = useRouter()
   return (
     <Flex
       w="100%"
-      maxW="700px"
+      maxW={WIDTH['navigation-base']}
       justify="center"
       bgColor="kbwhite"
       border="1px solid"
@@ -30,7 +31,7 @@ export const AppNavigation = () => {
     >
       <Flex
         w="100%"
-        maxW={['400px', '600px']}
+        maxW={[WIDTH['content-sp'], WIDTH['content-base']]}
         transition="max-width ease .2s"
         justify="space-between"
         align="center"
