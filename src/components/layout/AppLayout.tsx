@@ -6,6 +6,11 @@ import { AppHeader } from 'components/layout'
 import { WIDTH } from 'styles'
 import { DEFAULT } from 'utils/constants'
 
+const FAVICON = {
+  light: '/favicon-light.ico',
+  dark: '/favicon-dark.ico',
+}
+
 type Props = {
   title?: string
   description?: string
@@ -27,7 +32,8 @@ export const AppLayout: FC<Props> = (props) => {
           {title ? `${title} | ${DEFAULT['title']}` : DEFAULT['title']}
         </title>
         <meta name="description" content={description} />
-        <link rel="icon" href="/favicon.ico" />
+        //TODO(eastasian) be able to change favicon by color mode
+        <link rel="icon" href={FAVICON['light']} />
       </Head>
       <VStack h="100vh" px={2} py={0} {...restProps} maxW={maxW}>
         <AppHeader />
