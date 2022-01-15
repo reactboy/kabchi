@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
+import { createBreakpoints } from '@chakra-ui/theme-tools'
 import '@fontsource/lato'
 
 const styles = {
@@ -13,6 +14,13 @@ const styles = {
   }),
 }
 
+const breakpoints = createBreakpoints({
+  sm: '400px',
+  md: '700px',
+  lg: '960px',
+  xl: '1200px',
+  '2xl': '1600px',
+})
 const colors = {
   kbpurple: {
     50: '#E7E7ED',
@@ -83,4 +91,4 @@ const fonts = {
   heading: "'Lato', sans-serif",
 }
 
-export const theme = extendTheme({ styles, colors, fonts })
+export const theme = extendTheme({ breakpoints, styles, colors, fonts })
