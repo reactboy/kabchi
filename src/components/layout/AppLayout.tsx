@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import { VStack, Flex, Box, StackProps, FlexProps } from '@chakra-ui/react'
+import { VStack, Flex, StackProps, FlexProps } from '@chakra-ui/react'
 
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
