@@ -1,6 +1,6 @@
+import { NextPage } from 'next'
 import { Stack, UnorderedList, ListItem } from '@chakra-ui/react'
 
-import { NextPage } from 'next'
 import { AppLayout } from 'components/layout'
 import { GuestSignInButton, GoogleSignInButton } from 'components/common'
 
