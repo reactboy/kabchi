@@ -1,3 +1,8 @@
+type TaggingData = {
+  id: string
+  content: string
+  createdAt: string
+}
 export class Tagging {
   id: string
   uid: string
@@ -6,12 +11,12 @@ export class Tagging {
   createdAt: string
   updatedAt: string
 
-  constructor() {
-    this.id = ''
+  constructor(data: TaggingData) {
+    this.id = data.id
     this.uid = ''
     this.wallId = ''
-    this.content = ''
-    this.createdAt = ''
+    this.content = data.content
+    this.createdAt = data.createdAt
     this.updatedAt = ''
   }
 }

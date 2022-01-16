@@ -1,4 +1,5 @@
 import { MouseEvent, VFC } from 'react'
+import { useRouter } from 'next/router'
 import { Stack, Text, Flex, Box } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
@@ -10,6 +11,11 @@ type WallListItemProps = {
 
 const WallListItem: VFC<WallListItemProps> = (props) => {
   const { wall } = props
+  const router = useRouter()
+
+  const onClickItemHandler = (id: Wall['id']) => () => {
+    router.push(`/walls/${id}`)
+  }
   const onClickIconHandler =
     (cb: () => void) =>
     (e: MouseEvent<HTMLDivElement> & MouseEvent<SVGSVGElement>) => {
@@ -36,7 +42,7 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
       _hover={{
         borderRadius: '20px',
       }}
-      onClick={() => alert('list item')}
+      onClick={onClickItemHandler(wall.id)}
     >
       <Text fontSize={20} fontWeight="bold">
         {wall.title}
@@ -89,3 +95,5 @@ export const WallList: VFC<WallListProps> = (props) => {
 export const stubWalls = [...Array(5)].map(
   (_val, i) => new Wall({ id: `${i}`, title: `${i} タイトル` })
 )
+
+export const stubWall = new Wall({ id: '01', title: 'タイトル' })
