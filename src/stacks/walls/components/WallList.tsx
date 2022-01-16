@@ -95,3 +95,5 @@ export const WallList: VFC<WallListProps> = (props) => {
 export const stubWalls = [...Array(5)].map(
   (_val, i) => new Wall({ id: `${i}`, title: `${i} タイトル` })
 )
+
+export const stubWall = new Wall({ id: '01', title: 'タイトル' })

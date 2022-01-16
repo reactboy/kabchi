@@ -1,8 +1,15 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, VFC } from 'react'
 import { Stack, Box, Text, Flex } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
-const TaggingListItem = () => {
+import { Tagging } from 'classes'
+
+type TaggingListItemProps = {
+  tagging: Tagging
+}
+
+const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
+  const { tagging } = props
   const onClickIconHandler =
     (cb: () => void) =>
     (e: MouseEvent<HTMLDivElement> & MouseEvent<SVGSVGElement>) => {
@@ -12,15 +19,23 @@ const TaggingListItem = () => {
     }
 
   return (
-    <Stack w="100%" py={1} borderBottom="2px solid" borderColor="kbgray.400">
+    <Stack
+      w="100%"
+      py={1}
+      borderBottom="2px solid"
+      borderColor="kbgray.400"
+      spacing={1}
+    >
       <Box>
-        <Text fontSize={24}>I did awesome things today.</Text>
+        <Text fontSize={24} whiteSpace="pre-wrap">
+          {tagging.content}
+        </Text>
       </Box>
       <Flex justify="space-between">
         <Text color="kbpurple.400" fontWeight="bold">
-          12:00
+          {tagging.createdAt}
         </Text>
-        <Stack direction="row">
+        <Stack direction="row" align="center">
           <Box
             as={PencilIcon}
             w="24px"
@@ -53,13 +68,27 @@ const TaggingListItem = () => {
   )
 }
 
-export const TaggingList = () => {
+type TaggingListProps = {
+  taggings: Tagging[]
+}
+export const TaggingList: VFC<TaggingListProps> = (props) => {
+  const { taggings } = props
   return (
     <Stack w="100%">
-      <TaggingListItem />
-      <TaggingListItem />
-      <TaggingListItem />
-      <TaggingListItem />
+      {taggings.map((tagging, i) => (
+        <TaggingListItem key={i} tagging={tagging} />
+      ))}
     </Stack>
   )
 }
+
+export const stubTaggings = [...Array(5)].map(
+  (_val, i) =>
+    new Tagging({ id: `${i}`, content: `${i} コンテンツ`, createdAt: '12:00' })
+)
+
+export const stubTagging = new Tagging({
+  id: `01`,
+  content: `コンテンツ`,
+  createdAt: '12:00',
+})
