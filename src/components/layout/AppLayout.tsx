@@ -15,6 +15,9 @@ type Props = {
   title?: string
   description?: string
   innerOptions?: FlexProps
+  header?: {
+    logoSize?: number
+  }
 } & StackProps
 
 export const AppLayout: FC<Props> = (props) => {
@@ -22,8 +25,9 @@ export const AppLayout: FC<Props> = (props) => {
     children,
     title,
     description = DEFAULT['descriptoin'],
-    maxW = WIDTH['pc-base'],
+    maxW = WIDTH['app-base'],
     innerOptions = {},
+    header = {},
     ...restProps
   } = props
 
@@ -37,8 +41,16 @@ export const AppLayout: FC<Props> = (props) => {
         //TODO(eastasian) be able to change favicon by color mode
         <link rel="icon" href={FAVICON['light']} />
       </Head>
-      <VStack h="100vh" px={2} py={0} {...restProps} maxW={maxW}>
-        <AppHeader />
+      <VStack
+        h="100vh"
+        pt={4}
+        px={2}
+        pb={0}
+        mx="auto"
+        {...restProps}
+        maxW={maxW}
+      >
+        <AppHeader {...header} />
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
           {children}
         </Flex>

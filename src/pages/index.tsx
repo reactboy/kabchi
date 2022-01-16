@@ -3,10 +3,11 @@ import { Stack, UnorderedList, ListItem } from '@chakra-ui/react'
 
 import { AppLayout } from 'components/layout'
 import { GuestSignInButton, GoogleSignInButton } from 'components/common'
+import { WIDTH } from 'styles'
 
 const Top: NextPage = () => {
   return (
-    <AppLayout>
+    <AppLayout maxW={WIDTH['app-wide']} header={{ logoSize: 0.75 }}>
       <Stack direction="row">
         <Stack>
           <p>slowly but surely</p>
