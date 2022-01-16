@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
-import { Heading, Flex, Box, Stack, Text } from '@chakra-ui/react'
-import { TrashIcon, PencilIcon } from '@heroicons/react/solid'
+import { Heading, Flex, Box } from '@chakra-ui/react'
 
 import { Button } from 'components/common'
 import { AppLayout } from 'components/layout'
 import { WIDTH } from 'styles'
+
+import { WallList, stubWalls } from 'stacks/walls'
 
 const Dashboard: NextPage = () => {
   return (
@@ -22,55 +23,8 @@ const Dashboard: NextPage = () => {
         </Heading>
         <Button>Create Wall</Button>
       </Flex>
-      <Box maxX={WIDTH['content-base']} mt={4}>
-        <Stack>
-          {[null, null, null, null, null, null].map((_val, i) => {
-            return (
-              <Flex
-                key={i}
-                justify="space-between"
-                align="center"
-                bgColor="kbwhite"
-                border="1px solid"
-                borderColor="kbgray.400"
-                borderLeft="8px solid"
-                borderLeftColor="kbpurple.900"
-                borderRightRadius="4px"
-                minH={16}
-                pl={2}
-                pr={3}
-                transition="border-radius ease .4s"
-                cursor="pointer"
-                _hover={{
-                  borderRadius: '20px',
-                }}
-                onClick={() => alert('list item')}
-              >
-                <Text fontSize={20} fontWeight="bold">
-                  タイトル
-                </Text>
-                <Stack direction="row">
-                  <PencilIcon
-                    width="25px"
-                    height="25px"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      alert('pencil')
-                    }}
-                  />
-                  <TrashIcon
-                    width="25px"
-                    height="25px"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      alert('trash')
-                    }}
-                  />
-                </Stack>
-              </Flex>
-            )
-          })}
-        </Stack>
+      <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
+        <WallList walls={stubWalls} />
       </Box>
     </AppLayout>
   )
