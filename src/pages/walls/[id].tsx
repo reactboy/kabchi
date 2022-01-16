@@ -5,11 +5,10 @@ import { Flex, HStack, Heading, Text, Box } from '@chakra-ui/react'
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
 import { WIDTH } from 'styles'
-import { TaggingList } from 'stacks/taggings'
 
-const stubWall = {
-  title: 'Wall title',
-}
+import { TaggingList, stubTaggings } from 'stacks/taggings'
+import { stubWall } from 'stacks/walls'
+
 const stubDate = '01-11'
 
 const WallDetail: NextPage = () => {
@@ -33,7 +32,7 @@ const WallDetail: NextPage = () => {
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
-        <Flex as={Heading}>
+        <Flex as={Heading} align="center">
           <Text
             as="span"
             color="kbpurple.900"
@@ -46,7 +45,8 @@ const WallDetail: NextPage = () => {
           <Text
             as="span"
             ml={2}
-            fontSize={44}
+            fontSize={40}
+            fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
             {title}
@@ -60,7 +60,7 @@ const WallDetail: NextPage = () => {
         </Text>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
-        <TaggingList />
+        <TaggingList taggings={stubTaggings} />
       </Box>
       <Flex justify="space-between" mt={4}>
         <HStack align="flex-start" spacing={4}>
