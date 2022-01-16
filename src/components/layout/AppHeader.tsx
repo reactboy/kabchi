@@ -1,12 +1,23 @@
 import { VFC } from 'react'
+import { useRouter } from 'next/router'
 import { Flex } from '@chakra-ui/react'
 
 import { Logo } from 'components/common'
 
-export const AppHeader: VFC = () => {
+type Props = {
+  logoSize?: number
+}
+
+export const AppHeader: VFC<Props> = (props) => {
+  const { logoSize = 0.5 } = props
+  const router = useRouter()
   return (
     <Flex w="100%">
-      <Logo />
+      <Logo
+        ratio={logoSize}
+        cursor="pointer"
+        onClick={() => router.push('/')}
+      />
     </Flex>
   )
 }

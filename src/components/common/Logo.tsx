@@ -35,7 +35,7 @@ const DIMENSION: LogoSet<{ width: number; height: number }> = {
 
 type LogoType = keyof LogoSet
 type Props = {
-  logoType: LogoType
+  logoType?: LogoType
   ratio?: number
 } & BoxProps
 
