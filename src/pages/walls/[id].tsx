@@ -1,18 +1,31 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Flex, HStack, Heading, Text, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  HStack,
+  Heading,
+  Text,
+  Box,
+  useDisclosure,
+} from '@chakra-ui/react'
 
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
 import { WIDTH } from 'styles'
 
-import { TaggingList, stubTaggings } from 'stacks/taggings'
+import { TaggingList, stubTaggings, ControlModal } from 'stacks/taggings'
 import { stubWall } from 'stacks/walls'
 
 const stubDate = '01-11'
 
 const WallDetail: NextPage = () => {
   const router = useRouter()
+  const {
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose,
+  } = useDisclosure()
+
   const { title } = stubWall
   const selectedDate = stubDate
 
@@ -23,7 +36,7 @@ const WallDetail: NextPage = () => {
     alert('next')
   }
   const onClickAdd = () => {
-    alert('add')
+    onCreateOpen()
   }
   const onClickOverview = () => {
     alert('overview')
@@ -73,6 +86,14 @@ const WallDetail: NextPage = () => {
         </HStack>
         <Button onClick={onClickAdd}>Add</Button>
       </Flex>
+      <ControlModal
+        isOpen={isCreateOpen}
+        onClose={onCreateClose}
+        onSubmit={(e) => {
+          e.preventDefault()
+          onCreateClose()
+        }}
+      />
     </AppLayout>
   )
 }

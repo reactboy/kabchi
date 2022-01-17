@@ -1,13 +1,24 @@
 import { NextPage } from 'next'
-import { Heading, Flex, Box } from '@chakra-ui/react'
+import { Heading, Flex, Box, useDisclosure } from '@chakra-ui/react'
 
 import { Button } from 'components/common'
 import { AppLayout } from 'components/layout'
 import { WIDTH } from 'styles'
 
-import { WallList, stubWalls } from 'stacks/walls'
+import { WallList, stubWalls, ConfirmModal, ControlModal } from 'stacks/walls'
 
 const Dashboard: NextPage = () => {
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: _onDeleteOpen,
+    onClose: onDeleteClose,
+  } = useDisclosure()
+  const {
+    isOpen: isCreateOpen,
+    onOpen: onCreateOpen,
+    onClose: onCreateClose,
+  } = useDisclosure()
+
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
@@ -21,11 +32,26 @@ const Dashboard: NextPage = () => {
             transform="translateY(-80%)"
           />
         </Heading>
-        <Button>Create Wall</Button>
+        <Button onClick={onCreateOpen}>Create Wall</Button>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
         <WallList walls={stubWalls} />
       </Box>
+      <ConfirmModal
+        isOpen={isDeleteOpen}
+        onClose={onDeleteClose}
+        onConfirm={onDeleteClose}
+        text={`Are you sure you want to delete?`}
+      />
+      <ControlModal
+        isOpen={isCreateOpen}
+        onClose={onCreateClose}
+        onSubmit={(e) => {
+          e.preventDefault()
+          onCreateClose()
+        }}
+        submitText="create"
+      />
     </AppLayout>
   )
 }
