@@ -25,7 +25,23 @@ export const ModalOverlay: FC<ModalOverlayProps> = (props) => {
 }
 
 export const ModalContent: FC<ModalContentProps> = (props) => {
-  return <ChakraModalContent {...props} />
+  return (
+    <ChakraModalContent
+      pt={2}
+      borderTopRadius={20}
+      borderBottomRadius={0}
+      positin="relative"
+      _after={{
+        content: '""',
+        width: '100%',
+        height: 2,
+        bgColor: 'kbpurple.900',
+        position: 'absolute',
+        bottom: 0,
+      }}
+      {...props}
+    />
+  )
 }
 
 export const ModalHeader: FC<ModalHeaderProps> = (props) => {
@@ -33,7 +49,7 @@ export const ModalHeader: FC<ModalHeaderProps> = (props) => {
 }
 
 export const ModalFooter: FC<ModalFooterProps> = (props) => {
-  return <ChakraModalFooter {...props} />
+  return <ChakraModalFooter px={2} {...props} />
 }
 
 export const ModalBody: FC<ModalBodyProps> = (props) => {
