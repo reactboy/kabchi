@@ -4,8 +4,10 @@ import { Stack, UnorderedList, ListItem } from '@chakra-ui/react'
 import { AppLayout } from 'components/layout'
 import { GuestSignInButton, GoogleSignInButton } from 'components/common'
 import { WIDTH } from 'styles'
+import { useSignin } from 'utils/hooks'
 
 const Top: NextPage = () => {
+  const { signinAnnonymously, signinWithGoogle } = useSignin()
   return (
     <AppLayout maxW={WIDTH['app-wide']} header={{ logoSize: 0.75 }}>
       <Stack direction="row">
@@ -27,8 +29,8 @@ const Top: NextPage = () => {
             </ListItem>
           </UnorderedList>
           <Stack direction="row">
-            <GoogleSignInButton />
-            <GuestSignInButton />
+            <GoogleSignInButton onClick={signinWithGoogle} />
+            <GuestSignInButton onClick={signinAnnonymously} />
           </Stack>
         </Stack>
       </Stack>
