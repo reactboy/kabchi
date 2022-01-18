@@ -11,8 +11,10 @@ import { MenuAlt3Icon } from '@heroicons/react/solid'
 
 import { Logo } from 'components/common'
 import { WIDTH } from 'styles'
+import { useSignout } from 'utils/hooks'
 
 export const AppNavigation = () => {
+  const { signout } = useSignout()
   const router = useRouter()
   return (
     <Flex
@@ -52,7 +54,11 @@ export const AppNavigation = () => {
                 Dashboard
               </MenuItem>
               <MenuItem>About kabchi</MenuItem>
-              <MenuItem color="red.400" _hover={{ bgColor: 'red.50' }}>
+              <MenuItem
+                color="red.400"
+                _hover={{ bgColor: 'red.50' }}
+                onClick={signout}
+              >
                 Sign out
               </MenuItem>
             </MenuList>
