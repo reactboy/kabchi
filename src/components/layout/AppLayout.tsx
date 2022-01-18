@@ -5,6 +5,7 @@ import { VStack, Flex, StackProps, FlexProps } from '@chakra-ui/react'
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
 import { DEFAULT } from 'utils/constants'
+import { selectAuthLoading } from 'redux/feature'
 
 const FAVICON = {
   light: '/favicon-light.ico',
@@ -31,6 +32,8 @@ export const AppLayout: FC<Props> = (props) => {
     ...restProps
   } = props
 
+  const isAuthLoading = selectAuthLoading()
+
   return (
     <>
       <Head>
@@ -52,7 +55,7 @@ export const AppLayout: FC<Props> = (props) => {
       >
         <AppHeader {...header} />
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
-          {children}
+          {isAuthLoading ? <>loading</> : children}
         </Flex>
       </VStack>
       <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">

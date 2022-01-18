@@ -4,10 +4,12 @@ import { Heading, Flex, Box, useDisclosure } from '@chakra-ui/react'
 import { Button } from 'components/common'
 import { AppLayout } from 'components/layout'
 import { WIDTH } from 'styles'
+import { useAuthRequired } from 'utils/hooks'
 
 import { WallList, stubWalls, ConfirmModal, ControlModal } from 'stacks/walls'
 
 const Dashboard: NextPage = () => {
+  useAuthRequired()
   const {
     isOpen: isDeleteOpen,
     onOpen: _onDeleteOpen,

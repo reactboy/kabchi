@@ -10,6 +10,8 @@ import {
 import { onSnapshot, doc } from 'firebase/firestore'
 import Cookie from 'universal-cookie'
 
+import { store } from 'redux/app'
+import { setUid, setAuthLoading } from 'redux/feature'
 import { auth, db } from 'utils/firebase'
 
 const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
@@ -25,6 +27,7 @@ export const useAuthChanged = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log(user)
+        store.dispatch(setUid(user.uid))
         const token = await user.getIdToken(true)
         const idTokenResult = await user.getIdTokenResult()
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
@@ -51,6 +54,7 @@ export const useAuthChanged = () => {
         //TODO(eastasian) clear reqct query cache
         cookie.remove('token')
       }
+      store.dispatch(setAuthLoading(false))
     })
 
     return () => {
