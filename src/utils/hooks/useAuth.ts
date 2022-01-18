@@ -47,9 +47,9 @@ export const useAuthChanged = () => {
         cookie.set('token', token, { path: '/' })
         router.push('/dashboard')
       } else {
+        //NOTE(eastasian) reset cache for every unauthenticated user.
         //TODO(eastasian) clear reqct query cache
         cookie.remove('token')
-        router.push('/')
       }
     })
 
@@ -81,10 +81,12 @@ export const useSignin = () => {
 }
 
 export const useSignout = () => {
+  const router = useRouter()
   const signout = async () => {
     await signOut(auth)
     typeof unsubUserMeta === 'function' && unsubUserMeta()
     unsubUserMeta = null
+    router.push('/')
   }
 
   return {
