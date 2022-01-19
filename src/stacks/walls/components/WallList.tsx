@@ -4,6 +4,7 @@ import { Stack, Text, Flex, Box } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Wall } from 'classes'
+import { useWallsQuery } from '..'
 
 type WallListItemProps = {
   wall: Wall
@@ -77,12 +78,11 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
   )
 }
 
-type WallListProps = {
-  walls: Wall[]
-}
+export const WallList: VFC = () => {
+  const { data: walls, isLoading } = useWallsQuery()
 
-export const WallList: VFC<WallListProps> = (props) => {
-  const { walls } = props
+  if (isLoading) return <>loading</>
+
   return (
     <Stack>
       {walls.map((wall, i) => {

@@ -6,7 +6,7 @@ import { AppLayout } from 'components/layout'
 import { WIDTH } from 'styles'
 import { useAuthRequired } from 'utils/hooks'
 
-import { WallList, stubWalls, ConfirmModal, ControlModal } from 'stacks/walls'
+import { WallList, ConfirmModal, ControlModal } from 'stacks/walls'
 
 const Dashboard: NextPage = () => {
   useAuthRequired()
@@ -37,7 +37,7 @@ const Dashboard: NextPage = () => {
         <Button onClick={onCreateOpen}>Create Wall</Button>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
-        <WallList walls={stubWalls} />
+        <WallList />
       </Box>
       <ConfirmModal
         isOpen={isDeleteOpen}
@@ -48,7 +48,7 @@ const Dashboard: NextPage = () => {
       <ControlModal
         isOpen={isCreateOpen}
         onClose={onCreateClose}
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault()
           onCreateClose()
         }}

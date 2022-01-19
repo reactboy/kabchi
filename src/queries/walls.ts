@@ -2,10 +2,14 @@ import { gql } from 'graphql-request'
 
 export const GET_USER_WALLS = gql`
   query GetUserWalls($uid: String) {
-    walls_aggregate(where: { uid: { _eq: $uid } }) {
-      nodes {
-        title
-      }
+    walls(where: { uid: { _eq: $uid } }) {
+      uid
+      id
+      title
+      description
+      created_at
+      updated_at
+      deleted
     }
   }
 `
@@ -39,8 +43,28 @@ export const CREATE_WALL = gql`
 `
 
 export const UPDATE_WALL = gql`
-  mutation UpdateWall($wallId: uuid!) {
-    update_walls_by_pk(pk_columns: { id: $wallId }) {
+  mutation UpdateWall($wallId: uuid!, $title: String!, $description: String!) {
+    update_walls_by_pk(
+      pk_columns: { id: $wallId }
+      _set: { title: $title, description: $description }
+    ) {
+      created_at
+      deleted
+      description
+      id
+      title
+      uid
+      updated_at
+    }
+  }
+`
+
+export const DELETE_WALL = gql`
+  mutation UpdateWall($wallId: uuid!, $deleted: Boolean!) {
+    update_walls_by_pk(
+      pk_columns: { id: $wallId }
+      _set: { deleted: $deleted }
+    ) {
       created_at
       deleted
       description
