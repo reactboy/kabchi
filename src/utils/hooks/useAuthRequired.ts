@@ -8,6 +8,7 @@ export const useAuthRequired = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoading && !uid) router.push('/')
+    if (isLoading) return
+    if (!uid) router.push('/')
   }, [uid, isLoading])
 }

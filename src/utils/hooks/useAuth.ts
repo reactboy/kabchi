@@ -19,7 +19,6 @@ let unsubUserMeta: null | (() => void) = null
 
 export const useAuthChanged = () => {
   const cookie = new Cookie()
-  const router = useRouter()
 
   //TODO(eastasian) manage auth checking state in global.
 
@@ -43,15 +42,14 @@ export const useAuthChanged = () => {
 
               if (!hasuraClaimsSnap) return
               cookie.set('token', tokenSnap, { path: '/' })
-              router.push('/dashboard')
             }
           )
         }
         cookie.set('token', token, { path: '/' })
-        router.push('/dashboard')
       } else {
         //NOTE(eastasian) reset cache for every unauthenticated user.
         //TODO(eastasian) clear reqct query cache
+        store.dispatch(setUid(null))
         cookie.remove('token')
       }
       store.dispatch(setAuthLoading(false))
@@ -66,9 +64,12 @@ export const useAuthChanged = () => {
 }
 
 export const useSignin = () => {
+  const router = useRouter()
+
   const signinWithGoogle = async () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider())
+      router.push('/dashboard')
     } catch (e) {
       alert('popup closed')
       console.log('google login error')
@@ -76,6 +77,7 @@ export const useSignin = () => {
   }
   const signinAnnonymously = async () => {
     await signInAnonymously(auth)
+    router.push('/dashboard')
   }
 
   return {
