@@ -17,9 +17,9 @@ import { auth, db } from 'utils/firebase'
 const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 let unsubUserMeta: null | (() => void) = null
 
-export const useAuthChanged = () => {
-  const cookie = new Cookie()
+const cookie = new Cookie()
 
+export const useAuthChanged = () => {
   //TODO(eastasian) manage auth checking state in global.
 
   useEffect(() => {
@@ -64,12 +64,9 @@ export const useAuthChanged = () => {
 }
 
 export const useSignin = () => {
-  const router = useRouter()
-
   const signinWithGoogle = async () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider())
-      router.push('/dashboard')
     } catch (e) {
       alert('popup closed')
       console.log('google login error')
@@ -77,7 +74,6 @@ export const useSignin = () => {
   }
   const signinAnnonymously = async () => {
     await signInAnonymously(auth)
-    router.push('/dashboard')
   }
 
   return {
