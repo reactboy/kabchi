@@ -15,20 +15,21 @@ import { WIDTH } from 'styles'
 import { useAuthRequired } from 'utils/hooks'
 
 import { TaggingList, stubTaggings, ControlModal } from 'stacks/taggings'
-import { stubWall } from 'stacks/walls'
+import { useWallByIdQuery } from 'stacks/walls'
 
 const stubDate = '01-11'
 
 const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
+  const { data: wall, isLoading: isLoadingWall } = useWallByIdQuery()
+
   const {
     isOpen: isCreateOpen,
     onOpen: onCreateOpen,
     onClose: onCreateClose,
   } = useDisclosure()
 
-  const { title } = stubWall
   const selectedDate = stubDate
 
   const onClickPrevious = () => {
@@ -64,7 +65,7 @@ const WallDetail: NextPage = () => {
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
-            {title}
+            {isLoadingWall ? 'loading...' : wall.title}
           </Text>
         </Flex>
         <Button onClick={onClickOverview}>overview</Button>
