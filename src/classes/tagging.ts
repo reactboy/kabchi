@@ -19,4 +19,11 @@ export class Tagging {
     this.createdAt = data.createdAt
     this.updatedAt = ''
   }
+
+  getFormInput = () => {
+    return {
+      id: this.id,
+      content: this.content,
+    }
+  }
 }

@@ -3,13 +3,19 @@ import { Stack, Box, Text, Flex } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Tagging } from 'classes'
+import { setTaggingInput } from 'redux/feature'
+import { store } from 'redux/app'
+
+import { useTaggingsQuery } from '..'
 
 type TaggingListItemProps = {
   tagging: Tagging
+  onDelete: () => void
+  onEdit: () => void
 }
 
 const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
-  const { tagging } = props
+  const { tagging, onDelete, onEdit } = props
   const onClickIconHandler =
     (cb: () => void) =>
     (e: MouseEvent<HTMLDivElement> & MouseEvent<SVGSVGElement>) => {
@@ -46,7 +52,8 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
               opacity: 0.6,
             }}
             onClick={onClickIconHandler(() => {
-              alert('edit')
+              store.dispatch(setTaggingInput(tagging.getFormInput()))
+              onEdit()
             })}
           />
           <Box
@@ -59,7 +66,8 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
               color: 'red.400',
             }}
             onClick={onClickIconHandler(() => {
-              alert('delete')
+              store.dispatch(setTaggingInput(tagging.getFormInput()))
+              onDelete()
             })}
           />
         </Stack>
@@ -69,14 +77,26 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
 }
 
 type TaggingListProps = {
-  taggings: Tagging[]
+  wallId: string
+  onEdit: () => void
+  onDelete: () => void
 }
+
 export const TaggingList: VFC<TaggingListProps> = (props) => {
-  const { taggings } = props
+  const { wallId, onDelete, onEdit } = props
+  const { data: taggings, isLoading } = useTaggingsQuery(wallId)
+
+  if (isLoading) return <>loading...</>
+
   return (
     <Stack w="100%">
-      {taggings.map((tagging, i) => (
-        <TaggingListItem key={i} tagging={tagging} />
+      {taggings?.map((tagging, i) => (
+        <TaggingListItem
+          key={i}
+          tagging={tagging}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       ))}
     </Stack>
   )

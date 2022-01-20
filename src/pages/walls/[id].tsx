@@ -12,10 +12,18 @@ import {
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
 import { WIDTH } from 'styles'
+import { selectTaggingInput } from 'redux/feature'
 import { useAuthRequired } from 'utils/hooks'
 
-import { TaggingList, stubTaggings, ControlModal } from 'stacks/taggings'
+import {
+  TaggingList,
+  ControlModal,
+  ConfirmModal,
+  useTaggingsMutation,
+} from 'stacks/taggings'
 import { useWallByIdQuery } from 'stacks/walls'
+import { resetTaggingInput } from 'redux/feature'
+import { store } from 'redux/app'
 
 const stubDate = '01-11'
 
@@ -23,11 +31,27 @@ const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
   const { data: wall, isLoading: isLoadingWall } = useWallByIdQuery()
+  const {
+    createTaggingMutation,
+    updateTaggingMutation,
+    deleteTaggingMutation,
+  } = useTaggingsMutation(router.query.id as string)
+  const { id: taggingId, content } = selectTaggingInput()
 
   const {
     isOpen: isCreateOpen,
     onOpen: onCreateOpen,
     onClose: onCreateClose,
+  } = useDisclosure()
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onClose: onDeleteClose,
+  } = useDisclosure()
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onClose: onEditClose,
   } = useDisclosure()
 
   const selectedDate = stubDate
@@ -38,12 +62,11 @@ const WallDetail: NextPage = () => {
   const onClickNext = () => {
     alert('next')
   }
-  const onClickAdd = () => {
-    onCreateOpen()
-  }
-  const onClickOverview = () => {
-    alert('overview')
-  }
+
+  //   TODO(eastasian) implement overview
+  //   const onClickOverview = () => {
+  //     alert('overview')
+  //   }
 
   return (
     <AppLayout>
@@ -68,7 +91,8 @@ const WallDetail: NextPage = () => {
             {isLoadingWall ? 'loading...' : wall.title}
           </Text>
         </Flex>
-        <Button onClick={onClickOverview}>overview</Button>
+        {/* TODO(eastasian) implement overview */}
+        {/* <Button onClick={onClickOverview}>overview</Button> */}
       </Flex>
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
@@ -76,7 +100,11 @@ const WallDetail: NextPage = () => {
         </Text>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
-        <TaggingList taggings={stubTaggings} />
+        <TaggingList
+          onDelete={onDeleteOpen}
+          onEdit={onEditOpen}
+          wallId={router.query.id as string}
+        />
       </Box>
       <Flex justify="space-between" mt={4}>
         <HStack align="flex-start" spacing={4}>
@@ -87,14 +115,53 @@ const WallDetail: NextPage = () => {
             {'>'}
           </Text>
         </HStack>
-        <Button onClick={onClickAdd}>Add</Button>
+        <Button onClick={onCreateOpen}>Add</Button>
       </Flex>
+      <ConfirmModal
+        isOpen={isDeleteOpen}
+        onClose={() => {
+          store.dispatch(resetTaggingInput())
+          onDeleteClose()
+        }}
+        onConfirm={() => {
+          deleteTaggingMutation.mutate({
+            taggingId,
+          })
+          store.dispatch(resetTaggingInput())
+          onDeleteClose()
+        }}
+        text="Are you sure you want to delete?"
+      />
       <ControlModal
         isOpen={isCreateOpen}
-        onClose={onCreateClose}
+        onClose={() => {
+          store.dispatch(resetTaggingInput())
+          onCreateClose()
+        }}
         onSubmit={(e) => {
           e.preventDefault()
+          createTaggingMutation.mutate({
+            wallId: router.query.id as string,
+            content,
+          })
+          store.dispatch(resetTaggingInput())
           onCreateClose()
+        }}
+      />
+      <ControlModal
+        isOpen={isEditOpen}
+        onClose={() => {
+          store.dispatch(resetTaggingInput())
+          onEditClose()
+        }}
+        onSubmit={(e) => {
+          e.preventDefault()
+          updateTaggingMutation.mutate({
+            taggingId,
+            content,
+          })
+          store.dispatch(resetTaggingInput())
+          onEditClose()
         }}
       />
     </AppLayout>
