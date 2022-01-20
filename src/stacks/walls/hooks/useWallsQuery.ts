@@ -10,13 +10,13 @@ export const useWallsQuery = () => {
   const { graphQLClient } = useGraphQLClient()
 
   return useQuery<Wall[]>(
-    'walls',
+    ['walls', uid],
     async () => {
       const { walls } = await graphQLClient.request(GET_USER_WALLS, { uid })
       return walls.map((wall) => new Wall(wall))
     },
     {
-      staleTime: 10000,
+      staleTime: 300000,
     }
   )
 }

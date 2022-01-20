@@ -45,10 +45,10 @@ export const AppLayout: FC<Props> = (props) => {
         <link rel="icon" href={FAVICON['light']} />
       </Head>
       <VStack
-        h="100vh"
+        minh="100vh"
         pt={4}
         px={2}
-        pb={0}
+        pb={32}
         mx="auto"
         {...restProps}
         maxW={maxW}
@@ -57,10 +57,10 @@ export const AppLayout: FC<Props> = (props) => {
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
           {isAuthLoading ? <>loading</> : children}
         </Flex>
+        <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
+          <AppNavigation />
+        </Flex>
       </VStack>
-      <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
-        <AppNavigation />
-      </Flex>
     </>
   )
 }

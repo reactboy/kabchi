@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 
 export const GET_USER_WALLS = gql`
   query GetUserWalls($uid: String) {
-    walls(where: { uid: { _eq: $uid } }) {
+    walls(where: { uid: { _eq: $uid }, deleted: { _eq: false } }) {
       uid
       id
       title
