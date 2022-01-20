@@ -12,6 +12,7 @@ import {
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
 import { WIDTH } from 'styles'
+import { useAuthRequired } from 'utils/hooks'
 
 import { TaggingList, stubTaggings, ControlModal } from 'stacks/taggings'
 import { stubWall } from 'stacks/walls'
@@ -19,6 +20,7 @@ import { stubWall } from 'stacks/walls'
 const stubDate = '01-11'
 
 const WallDetail: NextPage = () => {
+  useAuthRequired()
   const router = useRouter()
   const {
     isOpen: isCreateOpen,

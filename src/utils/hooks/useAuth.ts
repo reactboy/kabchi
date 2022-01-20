@@ -10,21 +10,23 @@ import {
 import { onSnapshot, doc } from 'firebase/firestore'
 import Cookie from 'universal-cookie'
 
+import { store } from 'redux/app'
+import { setUid, setAuthLoading } from 'redux/feature'
 import { auth, db } from 'utils/firebase'
 
 const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 let unsubUserMeta: null | (() => void) = null
 
-export const useAuthChanged = () => {
-  const cookie = new Cookie()
-  const router = useRouter()
+const cookie = new Cookie()
 
+export const useAuthChanged = () => {
   //TODO(eastasian) manage auth checking state in global.
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         console.log(user)
+        store.dispatch(setUid(user.uid))
         const token = await user.getIdToken(true)
         const idTokenResult = await user.getIdTokenResult()
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
@@ -40,17 +42,17 @@ export const useAuthChanged = () => {
 
               if (!hasuraClaimsSnap) return
               cookie.set('token', tokenSnap, { path: '/' })
-              router.push('/dashboard')
             }
           )
         }
         cookie.set('token', token, { path: '/' })
-        router.push('/dashboard')
       } else {
         //NOTE(eastasian) reset cache for every unauthenticated user.
         //TODO(eastasian) clear reqct query cache
+        store.dispatch(setUid(null))
         cookie.remove('token')
       }
+      store.dispatch(setAuthLoading(false))
     })
 
     return () => {

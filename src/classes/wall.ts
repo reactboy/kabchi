@@ -1,6 +1,7 @@
 type WallData = {
   id: string
   title: string
+  description: string
 }
 
 export class Wall {
@@ -14,8 +15,16 @@ export class Wall {
   constructor(data: WallData) {
     this.id = data.id
     this.title = data.title
-    this.description = ''
+    this.description = data.description
     this.createdAt = ''
     this.deleted = false
+  }
+
+  getFormInput = () => {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+    }
   }
 }

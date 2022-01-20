@@ -1,5 +1,14 @@
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+
+import { selectAuth } from 'redux/feature'
+
 export const useAuthRequired = () => {
-  // check user is authenticated
-  // if not redirect to top(/)
-  // return login state and loading state
+  const { uid, isLoading } = selectAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!uid) router.push('/')
+  }, [uid, isLoading])
 }

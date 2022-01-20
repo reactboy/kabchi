@@ -1,4 +1,4 @@
-import { VFC, FormEventHandler } from 'react'
+import { VFC, FormEventHandler, ChangeEvent } from 'react'
 import {
   UseDisclosureReturn,
   FormControl,
@@ -18,6 +18,9 @@ import {
   Button,
 } from 'components/common'
 
+import { store } from 'redux/app'
+import { setWallInput, selectWallInput } from 'redux/feature'
+
 type ControlModalProps = {
   isOpen: UseDisclosureReturn['isOpen']
   onClose: UseDisclosureReturn['onClose']
@@ -27,6 +30,14 @@ type ControlModalProps = {
 
 export const ControlModal: VFC<ControlModalProps> = (props) => {
   const { isOpen, onClose, onSubmit, submitText = 'submit' } = props
+  const wallInput = selectWallInput()
+
+  const onChangeHandler =
+    (key: keyof typeof wallInput) =>
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      store.dispatch(setWallInput({ ...wallInput, [key]: e.target.value }))
+    }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -39,6 +50,8 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
             <Input
               variant="filled"
               placeholder="describe your goal in short."
+              value={wallInput.title}
+              onChange={onChangeHandler('title')}
             />
           </FormControl>
           <FormControl>
@@ -48,6 +61,8 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
             <Textarea
               variant="filled"
               placeholder="brief description of goal."
+              value={wallInput.description}
+              onChange={onChangeHandler('description')}
             />
           </FormControl>
         </ModalBody>
