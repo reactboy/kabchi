@@ -1,11 +1,12 @@
 import { MouseEvent, VFC } from 'react'
 import { useRouter } from 'next/router'
-import { Stack, Text, Flex, Box } from '@chakra-ui/react'
+import { StackProps, Stack, Text, Flex, Box } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Wall } from 'classes'
 import { store } from 'redux/app'
 import { setWallInput } from 'redux/feature'
+import { Button } from 'components/common'
 
 import { useWallsQuery } from '..'
 
@@ -85,29 +86,63 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
   )
 }
 
+type EmptyWallProps = {
+  onCreate: () => void
+} & StackProps
+
+const EmptyWall: VFC<EmptyWallProps> = (props) => {
+  const { onCreate, ...stackProps } = props
+  return (
+    <Stack direction="column" spacing={4} {...stackProps}>
+      <Box>
+        <Text fontSize={24} fontWeight="bold" color="kbviolet.700">
+          You don't have Wall yet...
+          <br />
+          Let's create one!
+        </Text>
+      </Box>
+      <Box>
+        <Button onClick={onCreate}>Create Wall</Button>
+      </Box>
+    </Stack>
+  )
+}
+
+//TODO(eastasian) consider separating responsibilities of WallList
 type WallListProps = {
   onDelete: () => void
   onEdit: () => void
+  onCreate: () => void
 }
 
 export const WallList: VFC<WallListProps> = (props) => {
-  const { onDelete, onEdit } = props
+  const { onDelete, onEdit, onCreate } = props
   const { data: walls, isLoading } = useWallsQuery()
 
   if (isLoading) return <>loading</>
 
   return (
     <Stack>
-      {walls.map((wall, i) => {
-        return (
-          <WallListItem
-            key={i}
-            wall={wall}
-            onDelete={onDelete}
-            onEdit={onEdit}
-          />
-        )
-      })}
+      {walls.length ? (
+        walls.map((wall, i) => {
+          return (
+            <WallListItem
+              key={i}
+              wall={wall}
+              onDelete={onDelete}
+              onEdit={onEdit}
+            />
+          )
+        })
+      ) : (
+        <EmptyWall
+          onCreate={onCreate}
+          position="absolute"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -100%)"
+        />
+      )}
     </Stack>
   )
 }

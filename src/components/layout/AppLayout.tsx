@@ -45,7 +45,7 @@ export const AppLayout: FC<Props> = (props) => {
         <link rel="icon" href={FAVICON['light']} />
       </Head>
       <VStack
-        minh="100vh"
+        minH="100vh"
         pt={4}
         px={2}
         pb={32}
