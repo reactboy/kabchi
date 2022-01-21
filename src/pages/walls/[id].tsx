@@ -104,6 +104,7 @@ const WallDetail: NextPage = () => {
           onEdit={onEditOpen}
           wallId={router.query.id as string}
           isEditable={isDateToday}
+          selectedDate={selectedDate}
         />
       </Box>
       <Flex justify="space-between" mt={4}>

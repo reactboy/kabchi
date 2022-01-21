@@ -60,3 +60,19 @@ export const isSameDate = (dates: DateArg[]) => {
 
   return d1.isSame(d2)
 }
+
+export const getDayRange = (date: DateArg) => {
+  const d = initDayjs(date)
+  return {
+    start: d.startOf('date'),
+    end: d.endOf('date'),
+  }
+}
+
+export const getDayRangeIso = (date: Parameters<typeof getDayRange>[0]) => {
+  const { start, end } = getDayRange(date)
+  return {
+    start: start.toISOString(),
+    end: end.toISOString(),
+  }
+}
