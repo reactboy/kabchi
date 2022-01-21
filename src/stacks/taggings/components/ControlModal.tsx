@@ -1,4 +1,4 @@
-import { FormEventHandler, VFC } from 'react'
+import { ChangeEvent, FormEventHandler, VFC } from 'react'
 import {
   UseDisclosureReturn,
   FormControl,
@@ -15,6 +15,8 @@ import {
   ModalOverlay,
   Button,
 } from 'components/common'
+import { setTaggingInput, selectTaggingInput } from 'redux/feature'
+import { store } from 'redux/app'
 
 type ControlModalProps = {
   isOpen: UseDisclosureReturn['isOpen']
@@ -24,6 +26,15 @@ type ControlModalProps = {
 }
 export const ControlModal: VFC<ControlModalProps> = (props) => {
   const { isOpen, onClose, onSubmit, submitText = 'submit' } = props
+  const taggingInput = selectTaggingInput()
+
+  const onChangeHandler =
+    (key: keyof typeof taggingInput) =>
+    (e: ChangeEvent<HTMLTextAreaElement>) => {
+      store.dispatch(
+        setTaggingInput({ ...taggingInput, [key]: e.target.value })
+      )
+    }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -34,7 +45,11 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
             <FormLabel fontSize={14} fontWeight="bold" color="kbpurple.900">
               Comment
             </FormLabel>
-            <Textarea placeholder="what you done?" />
+            <Textarea
+              value={taggingInput.content}
+              placeholder="what you done?"
+              onChange={onChangeHandler('content')}
+            />
           </FormControl>
         </ModalBody>
         <ModalFooter as={HStack}>

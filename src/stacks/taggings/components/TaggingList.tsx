@@ -3,13 +3,20 @@ import { Stack, Box, Text, Flex } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Tagging } from 'classes'
+import { setTaggingInput } from 'redux/feature'
+import { store } from 'redux/app'
+
+import { useTaggingsQuery } from '..'
 
 type TaggingListItemProps = {
   tagging: Tagging
+  onDelete: () => void
+  onEdit: () => void
+  isEditable: boolean
 }
 
 const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
-  const { tagging } = props
+  const { tagging, onDelete, onEdit, isEditable } = props
   const onClickIconHandler =
     (cb: () => void) =>
     (e: MouseEvent<HTMLDivElement> & MouseEvent<SVGSVGElement>) => {
@@ -33,22 +40,25 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
       </Box>
       <Flex justify="space-between">
         <Text color="kbpurple.400" fontWeight="bold">
-          {tagging.createdAt}
+          {tagging.getCreatedAt('HH:mm')}
         </Text>
-        <Stack direction="row" align="center">
-          <Box
-            as={PencilIcon}
-            w="24px"
-            h="24px"
-            transition="opacity ease .2s"
-            cursor="pointer"
-            _hover={{
-              opacity: 0.6,
-            }}
-            onClick={onClickIconHandler(() => {
-              alert('edit')
-            })}
-          />
+        <Stack minH="24px" direction="row" align="center">
+          {isEditable && (
+            <Box
+              as={PencilIcon}
+              w="24px"
+              h="24px"
+              transition="opacity ease .2s"
+              cursor="pointer"
+              _hover={{
+                opacity: 0.6,
+              }}
+              onClick={onClickIconHandler(() => {
+                store.dispatch(setTaggingInput(tagging.getFormInput()))
+                onEdit()
+              })}
+            />
+          )}
           <Box
             as={TrashIcon}
             w="20px"
@@ -59,7 +69,8 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
               color: 'red.400',
             }}
             onClick={onClickIconHandler(() => {
-              alert('delete')
+              store.dispatch(setTaggingInput(tagging.getFormInput()))
+              onDelete()
             })}
           />
         </Stack>
@@ -69,26 +80,30 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
 }
 
 type TaggingListProps = {
-  taggings: Tagging[]
+  wallId: string
+  onEdit: () => void
+  onDelete: () => void
+  isEditable: boolean
+  selectedDate: string
 }
+
 export const TaggingList: VFC<TaggingListProps> = (props) => {
-  const { taggings } = props
+  const { wallId, onDelete, onEdit, isEditable, selectedDate } = props
+  const { data: taggings, isLoading } = useTaggingsQuery(wallId, selectedDate)
+
+  if (isLoading) return <>loading...</>
+
   return (
     <Stack w="100%">
-      {taggings.map((tagging, i) => (
-        <TaggingListItem key={i} tagging={tagging} />
+      {taggings?.map((tagging, i) => (
+        <TaggingListItem
+          key={i}
+          tagging={tagging}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          isEditable={isEditable}
+        />
       ))}
     </Stack>
   )
 }
-
-export const stubTaggings = [...Array(5)].map(
-  (_val, i) =>
-    new Tagging({ id: `${i}`, content: `${i} コンテンツ`, createdAt: '12:00' })
-)
-
-export const stubTagging = new Tagging({
-  id: `01`,
-  content: `コンテンツ`,
-  createdAt: '12:00',
-})

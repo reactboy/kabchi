@@ -18,7 +18,9 @@ const Kabchi = ({ Component, pageProps }: AppProps) => {
       <ChakraProvider theme={theme}>
         <ReduxProvider store={store}>
           <Component {...pageProps} />
-          <ReactQueryDevtools />
+          {process.env.NEXT_PUBLIC_ENVIRONMENT === 'dev' && (
+            <ReactQueryDevtools />
+          )}
         </ReduxProvider>
       </ChakraProvider>
     </QueryClientProvider>
