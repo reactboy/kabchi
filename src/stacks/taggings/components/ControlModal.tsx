@@ -46,6 +46,7 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
               Comment
             </FormLabel>
             <Textarea
+              variant="filled"
               value={taggingInput.content}
               placeholder="what you done?"
               onChange={onChangeHandler('content')}

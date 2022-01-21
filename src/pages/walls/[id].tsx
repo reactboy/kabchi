@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   useDisclosure,
+  Center,
 } from '@chakra-ui/react'
 
 import { AppLayout } from 'components/layout'
@@ -31,7 +32,11 @@ const WallDetail: NextPage = () => {
   const router = useRouter()
   const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
     useTaggingsDate()
-  const { data: wall, isLoading: isLoadingWall } = useWallByIdQuery()
+  const {
+    data: wall,
+    isLoading: isLoadingWall,
+    isIdle: isIdleWall,
+  } = useWallByIdQuery()
   const {
     createTaggingMutation,
     updateTaggingMutation,
@@ -87,7 +92,7 @@ const WallDetail: NextPage = () => {
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
-            {isLoadingWall ? 'loading...' : wall.title}
+            {isIdleWall || isLoadingWall ? 'loading...' : wall.title}
           </Text>
         </Flex>
         {/* TODO(eastasian) implement overview */}
@@ -100,38 +105,57 @@ const WallDetail: NextPage = () => {
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
         <TaggingList
+          onCreate={onCreateOpen}
           onDelete={onDeleteOpen}
           onEdit={onEditOpen}
           wallId={router.query.id as string}
-          isEditable={isDateToday}
+          isDateToday={isDateToday}
           selectedDate={selectedDate}
         />
       </Box>
-      <Flex justify="space-between" mt={4}>
-        <HStack align="flex-start" spacing={4}>
-          <Text
-            as="button"
-            fontSize={40}
-            cursor="pointer"
-            onClick={onClickPrevious}
+      <Center position="fixed" bottom="20" left="0" w="100%">
+        <Flex
+          justify="space-between"
+          align="center"
+          mt={4}
+          w="100%"
+          maxW={WIDTH['content-base']}
+        >
+          <HStack
+            align="flex-start"
+            spacing={4}
+            bgColor="kbwhite"
+            borderRadius="20"
+            border="solid 1px"
+            borderColor="kbgray.100"
+            px="2"
           >
-            {'<'}
-          </Text>
-          <Text
-            as="button"
-            fontSize={40}
-            cursor="pointer"
-            disabled={isDateToday}
-            onClick={onClickNext}
-            _disabled={{
-              color: 'kbpurple.400',
-            }}
-          >
-            {'>'}
-          </Text>
-        </HStack>
-        {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
-      </Flex>
+            <Text
+              as="button"
+              fontSize={40}
+              cursor="pointer"
+              onClick={onClickPrevious}
+              lineHeight="1"
+            >
+              {'<'}
+            </Text>
+            <Text
+              as="button"
+              fontSize={40}
+              cursor="pointer"
+              lineHeight="1"
+              disabled={isDateToday}
+              onClick={onClickNext}
+              _disabled={{
+                color: 'kbpurple.400',
+              }}
+            >
+              {'>'}
+            </Text>
+          </HStack>
+          {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
+        </Flex>
+      </Center>
       <ConfirmModal
         isOpen={isDeleteOpen}
         onClose={() => {

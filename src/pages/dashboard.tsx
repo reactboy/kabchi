@@ -53,7 +53,11 @@ const Dashboard: NextPage = () => {
         <Button onClick={onCreateOpen}>Create Wall</Button>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
-        <WallList onDelete={onDeleteOpen} onEdit={onEditOpen} />
+        <WallList
+          onCreate={onCreateOpen}
+          onDelete={onDeleteOpen}
+          onEdit={onEditOpen}
+        />
       </Box>
       <ConfirmModal
         isOpen={isDeleteOpen}
