@@ -1,5 +1,14 @@
 import { MouseEvent, VFC } from 'react'
-import { Center, Stack, StackProps, Box, Text, Flex } from '@chakra-ui/react'
+import {
+  Skeleton,
+  SkeletonProps,
+  Center,
+  Stack,
+  StackProps,
+  Box,
+  Text,
+  Flex,
+} from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Tagging } from 'classes'
@@ -80,6 +89,20 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
   )
 }
 
+const TaggingListItemSkeleton: VFC<SkeletonProps> = (props) => {
+  return <Skeleton h="48px" {...props} />
+}
+
+const TaggingListSkeleton: VFC<StackProps> = (props) => {
+  return (
+    <Stack {...props}>
+      <TaggingListItemSkeleton />
+      <TaggingListItemSkeleton w="95%" />
+      <TaggingListItemSkeleton w="90%" />
+    </Stack>
+  )
+}
+
 type EmptyTaggingProps = {
   onCreate: () => void
   isDateToday: boolean
@@ -116,7 +139,7 @@ export const TaggingList: VFC<TaggingListProps> = (props) => {
     props
   const { data: taggings, isLoading } = useTaggingsQuery(wallId, selectedDate)
 
-  if (isLoading) return <>loading...</>
+  if (isLoading) return <TaggingListSkeleton />
 
   return (
     <Stack w="100%">

@@ -121,12 +121,21 @@ const WallDetail: NextPage = () => {
           w="100%"
           maxW={WIDTH['content-base']}
         >
-          <HStack align="flex-start" spacing={4}>
+          <HStack
+            align="flex-start"
+            spacing={4}
+            bgColor="kbwhite"
+            borderRadius="20"
+            border="solid 1px"
+            borderColor="kbgray.100"
+            px="2"
+          >
             <Text
               as="button"
               fontSize={40}
               cursor="pointer"
               onClick={onClickPrevious}
+              lineHeight="1"
             >
               {'<'}
             </Text>
@@ -134,6 +143,7 @@ const WallDetail: NextPage = () => {
               as="button"
               fontSize={40}
               cursor="pointer"
+              lineHeight="1"
               disabled={isDateToday}
               onClick={onClickNext}
               _disabled={{
