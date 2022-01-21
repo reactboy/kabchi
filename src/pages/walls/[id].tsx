@@ -73,7 +73,7 @@ const WallDetail: NextPage = () => {
   //   }
 
   return (
-    <AppLayout position="relative">
+    <AppLayout>
       <Flex justify="space-between" align="flex-end">
         <Flex as={Heading} align="center">
           <Text
