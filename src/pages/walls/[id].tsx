@@ -31,7 +31,11 @@ const WallDetail: NextPage = () => {
   const router = useRouter()
   const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
     useTaggingsDate()
-  const { data: wall, isLoading: isLoadingWall } = useWallByIdQuery()
+  const {
+    data: wall,
+    isLoading: isLoadingWall,
+    isIdle: isIdleWall,
+  } = useWallByIdQuery()
   const {
     createTaggingMutation,
     updateTaggingMutation,
@@ -87,7 +91,7 @@ const WallDetail: NextPage = () => {
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
-            {isLoadingWall ? 'loading...' : wall.title}
+            {isIdleWall || isLoadingWall ? 'loading...' : wall.title}
           </Text>
         </Flex>
         {/* TODO(eastasian) implement overview */}
