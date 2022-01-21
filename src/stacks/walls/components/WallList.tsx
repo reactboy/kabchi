@@ -1,6 +1,15 @@
 import { MouseEvent, VFC } from 'react'
 import { useRouter } from 'next/router'
-import { StackProps, Stack, Text, Flex, Box } from '@chakra-ui/react'
+import {
+  StackProps,
+  Stack,
+  Text,
+  Flex,
+  Box,
+  Skeleton,
+  SkeletonText,
+  SkeletonProps,
+} from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
 import { Wall } from 'classes'
@@ -86,6 +95,20 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
   )
 }
 
+const WallListItemSkeleton: VFC<SkeletonProps> = (props) => {
+  return <Skeleton h="56px" {...props} />
+}
+
+export const WallListSkeleton: VFC<StackProps> = (props) => {
+  return (
+    <Stack {...props}>
+      <WallListItemSkeleton />
+      <WallListItemSkeleton w="95%" />
+      <WallListItemSkeleton w="90%" />
+    </Stack>
+  )
+}
+
 type EmptyWallProps = {
   onCreate: () => void
 } & StackProps
@@ -119,7 +142,7 @@ export const WallList: VFC<WallListProps> = (props) => {
   const { onDelete, onEdit, onCreate } = props
   const { data: walls, isLoading } = useWallsQuery()
 
-  if (isLoading) return <>loading</>
+  if (isLoading) return <WallListSkeleton />
 
   return (
     <Stack>

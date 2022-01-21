@@ -1,6 +1,13 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import { VStack, Flex, StackProps, FlexProps } from '@chakra-ui/react'
+import {
+  VStack,
+  Flex,
+  StackProps,
+  FlexProps,
+  Stack,
+  Skeleton,
+} from '@chakra-ui/react'
 
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
@@ -20,6 +27,19 @@ type Props = {
     logoSize?: number
   }
 } & StackProps
+
+const AppLayoutSkeleton = () => {
+  return (
+    <VStack spacing={4}>
+      <Skeleton w="100%" h={12} />
+      <VStack w="100%">
+        <Skeleton w="100%" h={8} />
+        <Skeleton w="100%" h={8} />
+        <Skeleton w="100%" h={8} />
+      </VStack>
+    </VStack>
+  )
+}
 
 export const AppLayout: FC<Props> = (props) => {
   const {
@@ -55,7 +75,7 @@ export const AppLayout: FC<Props> = (props) => {
       >
         <AppHeader {...header} />
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
-          {isAuthLoading ? <>loading</> : children}
+          {isAuthLoading ? <AppLayoutSkeleton /> : children}
         </Flex>
         <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
           <AppNavigation />
