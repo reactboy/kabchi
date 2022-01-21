@@ -140,9 +140,9 @@ type WallListProps = {
 
 export const WallList: VFC<WallListProps> = (props) => {
   const { onDelete, onEdit, onCreate } = props
-  const { data: walls, isLoading } = useWallsQuery()
+  const { data: walls, isLoading, isIdle } = useWallsQuery()
 
-  if (isLoading) return <WallListSkeleton />
+  if (isLoading || isIdle) return <WallListSkeleton />
 
   return (
     <Stack>

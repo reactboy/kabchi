@@ -11,7 +11,7 @@ export const useWallsQuery = () => {
   const uid = selectUid()
   const { graphQLClient } = useGraphQLClient()
 
-  return useQuery<Wall[]>(
+  const walls = useQuery<Wall[]>(
     ['walls', uid],
     async () => {
       const { walls } = await graphQLClient.request(GET_USER_WALLS, { uid })
@@ -19,8 +19,15 @@ export const useWallsQuery = () => {
     },
     {
       staleTime: 300000,
+      enabled: false,
     }
   )
+
+  useEffect(() => {
+    if (uid) walls.refetch()
+  }, [uid])
+
+  return walls
 }
 
 export const useWallByIdQuery = () => {
