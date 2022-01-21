@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   useDisclosure,
+  Center,
 } from '@chakra-ui/react'
 
 import { AppLayout } from 'components/layout'
@@ -72,7 +73,7 @@ const WallDetail: NextPage = () => {
   //   }
 
   return (
-    <AppLayout>
+    <AppLayout position="relative">
       <Flex justify="space-between" align="flex-end">
         <Flex as={Heading} align="center">
           <Text
@@ -104,38 +105,47 @@ const WallDetail: NextPage = () => {
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
         <TaggingList
+          onCreate={onCreateOpen}
           onDelete={onDeleteOpen}
           onEdit={onEditOpen}
           wallId={router.query.id as string}
-          isEditable={isDateToday}
+          isDateToday={isDateToday}
           selectedDate={selectedDate}
         />
       </Box>
-      <Flex justify="space-between" mt={4}>
-        <HStack align="flex-start" spacing={4}>
-          <Text
-            as="button"
-            fontSize={40}
-            cursor="pointer"
-            onClick={onClickPrevious}
-          >
-            {'<'}
-          </Text>
-          <Text
-            as="button"
-            fontSize={40}
-            cursor="pointer"
-            disabled={isDateToday}
-            onClick={onClickNext}
-            _disabled={{
-              color: 'kbpurple.400',
-            }}
-          >
-            {'>'}
-          </Text>
-        </HStack>
-        {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
-      </Flex>
+      <Center position="fixed" bottom="20" left="0" w="100%">
+        <Flex
+          justify="space-between"
+          align="center"
+          mt={4}
+          w="100%"
+          maxW={WIDTH['content-base']}
+        >
+          <HStack align="flex-start" spacing={4}>
+            <Text
+              as="button"
+              fontSize={40}
+              cursor="pointer"
+              onClick={onClickPrevious}
+            >
+              {'<'}
+            </Text>
+            <Text
+              as="button"
+              fontSize={40}
+              cursor="pointer"
+              disabled={isDateToday}
+              onClick={onClickNext}
+              _disabled={{
+                color: 'kbpurple.400',
+              }}
+            >
+              {'>'}
+            </Text>
+          </HStack>
+          {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
+        </Flex>
+      </Center>
       <ConfirmModal
         isOpen={isDeleteOpen}
         onClose={() => {
