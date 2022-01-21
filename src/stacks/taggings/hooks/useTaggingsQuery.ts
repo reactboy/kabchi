@@ -4,7 +4,7 @@ import { GET_TAGGINGS } from 'queries'
 import { useGraphQLClient } from 'utils/hooks'
 import { Tagging } from 'classes'
 
-export const useTaggingsQuery = (wallId: string) => {
+export const useTaggingsQuery = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
 
   return useQuery(

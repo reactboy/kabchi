@@ -12,30 +12,31 @@ import {
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
 import { WIDTH } from 'styles'
+import { store } from 'redux/app'
 import { selectTaggingInput } from 'redux/feature'
 import { useAuthRequired } from 'utils/hooks'
+import { resetTaggingInput } from 'redux/feature'
 
 import {
   TaggingList,
   ControlModal,
   ConfirmModal,
   useTaggingsMutation,
+  useTaggingsDate,
 } from 'stacks/taggings'
 import { useWallByIdQuery } from 'stacks/walls'
-import { resetTaggingInput } from 'redux/feature'
-import { store } from 'redux/app'
-
-const stubDate = '01-11'
 
 const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
+  const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
+    useTaggingsDate()
   const { data: wall, isLoading: isLoadingWall } = useWallByIdQuery()
   const {
     createTaggingMutation,
     updateTaggingMutation,
     deleteTaggingMutation,
-  } = useTaggingsMutation(router.query.id as string)
+  } = useTaggingsMutation(router.query.id as string, selectedDate)
   const { id: taggingId, content } = selectTaggingInput()
 
   const {
@@ -54,13 +55,11 @@ const WallDetail: NextPage = () => {
     onClose: onEditClose,
   } = useDisclosure()
 
-  const selectedDate = stubDate
-
   const onClickPrevious = () => {
-    alert('previous')
+    toPreviousDate()
   }
   const onClickNext = () => {
-    alert('next')
+    toNextDate()
   }
 
   //   TODO(eastasian) implement overview
@@ -96,7 +95,7 @@ const WallDetail: NextPage = () => {
       </Flex>
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
-          {selectedDate}
+          {displayDate}
         </Text>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
@@ -104,18 +103,33 @@ const WallDetail: NextPage = () => {
           onDelete={onDeleteOpen}
           onEdit={onEditOpen}
           wallId={router.query.id as string}
+          isEditable={isDateToday}
         />
       </Box>
       <Flex justify="space-between" mt={4}>
         <HStack align="flex-start" spacing={4}>
-          <Text fontSize={40} cursor="pointer" onClick={onClickPrevious}>
+          <Text
+            as="button"
+            fontSize={40}
+            cursor="pointer"
+            onClick={onClickPrevious}
+          >
             {'<'}
           </Text>
-          <Text fontSize={40} cursor="pointer" onClick={onClickNext}>
+          <Text
+            as="button"
+            fontSize={40}
+            cursor="pointer"
+            disabled={isDateToday}
+            onClick={onClickNext}
+            _disabled={{
+              color: 'kbpurple.400',
+            }}
+          >
             {'>'}
           </Text>
         </HStack>
-        <Button onClick={onCreateOpen}>Add</Button>
+        {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
       </Flex>
       <ConfirmModal
         isOpen={isDeleteOpen}

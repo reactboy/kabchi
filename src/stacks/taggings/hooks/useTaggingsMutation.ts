@@ -5,7 +5,7 @@ import { useGraphQLClient } from 'utils/hooks'
 
 import { Tagging } from 'classes'
 
-export const useTaggingsMutation = (wallId: string) => {
+export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
   const queryClient = useQueryClient()
 
