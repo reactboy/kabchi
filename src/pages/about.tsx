@@ -3,13 +3,14 @@ import { Stack, Text } from '@chakra-ui/react'
 
 import { Heading } from 'components/common'
 import { AppLayout } from 'components/layout'
+import { DEVELOPER } from 'utils/constants'
 
-import { DescriptionBlock } from 'stacks/about'
+import { DescriptionBlock, Profile, Social } from 'stacks/about'
 
 const About: NextPage = () => {
   return (
     <AppLayout>
-      <Stack>
+      <Stack spacing={12}>
         <Stack>
           <Heading alignSelf="flex-start">About</Heading>
           <Stack>
@@ -73,7 +74,7 @@ const About: NextPage = () => {
                 There are many different ways to use kabchi. I develop kabchi so
                 that I can manage my goals and visualize progress by date but
                 kabchi could be use as a tools for any other purpose of
-                recording like dialies.
+                recording like diary.
               </Text>
               <Text>
                 What you need to know is you can make a wall and you can make
@@ -81,9 +82,32 @@ const About: NextPage = () => {
               </Text>
             </DescriptionBlock>
           </Stack>
+          <Text align="center">
+            You can see source code of kabchi :{' '}
+            <Text
+              as="a"
+              href="https://github.com/reactboy/kabchi"
+              target="_blank"
+              color="blue.600"
+              textDecoration="underline"
+            >
+              gtihub/reactboy/kabchi
+            </Text>
+          </Text>
         </Stack>
         <Stack>
           <Heading alignSelf="flex-start">Developer</Heading>
+          <Stack pt="10" spacing="4">
+            <Profile
+              name={DEVELOPER['eastasian']['name']}
+              organization={DEVELOPER['eastasian']['organization']}
+              avatar={DEVELOPER['eastasian']['avatar']}
+              socials={DEVELOPER['eastasian']['social'] as Social[]}
+            />
+            <Text align="center" fontSize="2xl">
+              I'm open for any collab ^^
+            </Text>
+          </Stack>
         </Stack>
       </Stack>
     </AppLayout>
