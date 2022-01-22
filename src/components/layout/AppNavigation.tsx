@@ -53,7 +53,9 @@ export const AppNavigation = () => {
               <MenuItem onClick={() => router.push('/dashboard')}>
                 Dashboard
               </MenuItem>
-              <MenuItem>About kabchi</MenuItem>
+              <MenuItem onClick={() => router.push('/about')}>
+                About kabchi
+              </MenuItem>
               <MenuItem
                 color="red.400"
                 _hover={{ bgColor: 'red.50' }}
