@@ -23,7 +23,7 @@ const Top: NextPage = () => {
     <AppLayout
       maxW={WIDTH['app-wide']}
       header={{ logoSize: 0.75 }}
-      innerOptions={{ display: 'flex', flexDir: 'row', pt: 20 }}
+      innerOptions={{ display: 'flex', flexDir: 'row', pt: 28 }}
     >
       <Box
         bgRepeat="no-repeat"

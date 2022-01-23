@@ -12,10 +12,14 @@ import { MenuAlt3Icon } from '@heroicons/react/solid'
 import { Logo } from 'components/common'
 import { WIDTH } from 'styles'
 import { useSignout } from 'utils/hooks'
+import { selectUid } from 'redux/feature'
 
 export const AppNavigation = () => {
   const { signout } = useSignout()
   const router = useRouter()
+  const uid = selectUid()
+  const path = uid ? '/dashboard' : '/'
+
   return (
     <Flex
       w="100%"
@@ -39,7 +43,7 @@ export const AppNavigation = () => {
         align="center"
       >
         <Logo
-          onClick={() => router.push('/')}
+          onClick={() => router.push(path)}
           ratio={0.75}
           logoType="icon"
           cursor="pointer"
