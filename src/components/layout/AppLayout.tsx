@@ -12,7 +12,7 @@ import {
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
 import { DEFAULT } from 'utils/constants'
-import { selectAuthLoading } from 'redux/feature'
+import { selectAuth } from 'redux/feature'
 
 const FAVICON = {
   light: '/favicon-light.ico',
@@ -52,7 +52,7 @@ export const AppLayout: FC<Props> = (props) => {
     ...restProps
   } = props
 
-  const isAuthLoading = selectAuthLoading()
+  const { uid, isLoading: isAuthLoading } = selectAuth()
 
   return (
     <>
@@ -77,9 +77,11 @@ export const AppLayout: FC<Props> = (props) => {
         <Flex direction="column" flex="1" w="100%" {...innerOptions}>
           {isAuthLoading ? <AppLayoutSkeleton /> : children}
         </Flex>
-        <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
-          <AppNavigation />
-        </Flex>
+        {uid && (
+          <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
+            <AppNavigation />
+          </Flex>
+        )}
       </VStack>
     </>
   )

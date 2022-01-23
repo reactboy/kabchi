@@ -1,12 +1,14 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { Stack, UnorderedList, ListItem } from '@chakra-ui/react'
+import { Box, Stack, Flex, Text } from '@chakra-ui/react'
+import { LinkIcon } from '@heroicons/react/solid'
 
 import { AppLayout } from 'components/layout'
 import {
   GuestSignInButton,
   GoogleSignInButton,
   Button,
+  Logo,
 } from 'components/common'
 import { WIDTH } from 'styles'
 import { useSignin } from 'utils/hooks'
@@ -18,37 +20,54 @@ const Top: NextPage = () => {
   const { signinAnnonymously, signinWithGoogle } = useSignin()
 
   return (
-    <AppLayout maxW={WIDTH['app-wide']} header={{ logoSize: 0.75 }}>
-      <Stack direction="row">
+    <AppLayout
+      maxW={WIDTH['app-wide']}
+      header={{ logoSize: 0.75 }}
+      innerOptions={{ display: 'flex', flexDir: 'row', pt: 28 }}
+    >
+      <Box
+        bgRepeat="no-repeat"
+        bgImage="/assets/images/top/hero.svg"
+        bgPos="center"
+        bgSize="contain"
+        width="100%"
+        maxH="400px"
+      />
+      <Stack width="100%" spacing="8">
         <Stack>
-          <p>slowly but surely</p>
-          <p>achieve your goal</p>
-          <p>with kabchi</p>
+          <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+            Manage your goals
+          </Box>
+          <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+            Record your progress
+          </Box>
+          <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+            Review your activities
+          </Box>
+          <Flex align="flex-end">
+            <Text fontWeight="bold">with</Text>
+            <Flex
+              align="center"
+              ml="2"
+              cursor="pointer"
+              onClick={() => router.push('/about')}
+            >
+              <Logo ratio={0.4} />
+              <Box as={LinkIcon} w="5" h="5" />
+            </Flex>
+          </Flex>
         </Stack>
-        <Stack>
-          <UnorderedList>
-            <ListItem>
-              <p>目標をリストで管理</p>
-            </ListItem>
-            <ListItem>
-              <p>日々の積み重ねを記録</p>
-            </ListItem>
-            <ListItem>
-              <p>毎日の振り返りをサポート</p>
-            </ListItem>
-          </UnorderedList>
-          <Stack direction="row">
-            {uid ? (
-              <Button onClick={() => router.push('/dashboard')}>
-                go to dashboard
-              </Button>
-            ) : (
-              <>
-                <GoogleSignInButton onClick={signinWithGoogle} />
-                <GuestSignInButton onClick={signinAnnonymously} />
-              </>
-            )}
-          </Stack>
+        <Stack direction="row">
+          {uid ? (
+            <Button onClick={() => router.push('/dashboard')}>
+              go to dashboard
+            </Button>
+          ) : (
+            <>
+              <GoogleSignInButton onClick={signinWithGoogle} />
+              <GuestSignInButton onClick={signinAnnonymously} />
+            </>
+          )}
         </Stack>
       </Stack>
     </AppLayout>
