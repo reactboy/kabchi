@@ -3,6 +3,7 @@ import { gql } from 'graphql-request'
 export const GET_TAGGINGS = gql`
   query GetTaggings($wallId: uuid!, $start: timestamptz!, $end: timestamptz!) {
     taggings(
+      order_by: { created_at: asc }
       where: {
         wall_id: { _eq: $wallId }
         created_at: { _gte: $start, _lte: $end }
