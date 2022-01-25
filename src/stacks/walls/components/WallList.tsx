@@ -7,7 +7,6 @@ import {
   Flex,
   Box,
   Skeleton,
-  SkeletonText,
   SkeletonProps,
 } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
@@ -15,7 +14,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 import { Wall } from 'classes'
 import { store } from 'redux/app'
 import { setWallInput } from 'redux/feature'
-import { Button } from 'components/common'
+import { Button, ErrorPlaceholder } from 'components/common'
 
 import { useWallsQuery } from '..'
 
@@ -140,9 +139,10 @@ type WallListProps = {
 
 export const WallList: VFC<WallListProps> = (props) => {
   const { onDelete, onEdit, onCreate } = props
-  const { data: walls, isLoading, isIdle } = useWallsQuery()
+  const { data: walls, isLoading, isIdle, isError } = useWallsQuery()
 
   if (isLoading || isIdle) return <WallListSkeleton />
+  if (isError) return <ErrorPlaceholder />
 
   return (
     <Stack>

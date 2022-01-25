@@ -14,7 +14,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 import { Tagging } from 'classes'
 import { setTaggingInput } from 'redux/feature'
 import { store } from 'redux/app'
-import { Button } from 'components/common'
+import { Button, ErrorPlaceholder } from 'components/common'
 
 import { useTaggingsQuery } from '..'
 
@@ -137,9 +137,14 @@ type TaggingListProps = {
 export const TaggingList: VFC<TaggingListProps> = (props) => {
   const { wallId, onDelete, onCreate, onEdit, isDateToday, selectedDate } =
     props
-  const { data: taggings, isLoading } = useTaggingsQuery(wallId, selectedDate)
+  const {
+    data: taggings,
+    isLoading,
+    isError,
+  } = useTaggingsQuery(wallId, selectedDate)
 
   if (isLoading) return <TaggingListSkeleton />
+  if (isError) return <ErrorPlaceholder />
 
   return (
     <Stack w="100%">
