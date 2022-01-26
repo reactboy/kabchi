@@ -20,13 +20,9 @@ let unsubUserMeta: null | (() => void) = null
 const cookie = new Cookie()
 
 export const useAuthChanged = () => {
-  //TODO(eastasian) manage auth checking state in global.
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user)
-        store.dispatch(setUid(user.uid))
         const token = await user.getIdToken(true)
         const idTokenResult = await user.getIdTokenResult()
         const hasuraClaims = idTokenResult.claims[HASURA_TOKEN_KEY]
@@ -42,10 +38,14 @@ export const useAuthChanged = () => {
 
               if (!hasuraClaimsSnap) return
               cookie.set('token', tokenSnap, { path: '/' })
+              store.dispatch(setUid(user.uid))
             }
           )
+          return
         }
+
         cookie.set('token', token, { path: '/' })
+        store.dispatch(setUid(user.uid))
       } else {
         //NOTE(eastasian) reset cache for every unauthenticated user.
         //TODO(eastasian) clear reqct query cache
@@ -68,8 +68,7 @@ export const useSignin = () => {
     try {
       await signInWithPopup(auth, new GoogleAuthProvider())
     } catch (e) {
-      alert('popup closed')
-      console.log('google login error')
+      console.log('google login error', e)
     }
   }
   const signinAnnonymously = async () => {

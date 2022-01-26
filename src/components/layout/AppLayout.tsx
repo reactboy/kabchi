@@ -1,13 +1,6 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import {
-  VStack,
-  Flex,
-  StackProps,
-  FlexProps,
-  Stack,
-  Skeleton,
-} from '@chakra-ui/react'
+import { VStack, Flex, StackProps, FlexProps, Skeleton } from '@chakra-ui/react'
 
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
@@ -28,7 +21,7 @@ type Props = {
   }
 } & StackProps
 
-const AppLayoutSkeleton = () => {
+export const AppLayoutSkeleton = () => {
   return (
     <VStack spacing={4}>
       <Skeleton w="100%" h={12} />
