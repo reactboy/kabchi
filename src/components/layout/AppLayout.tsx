@@ -54,7 +54,7 @@ export const AppLayout: FC<Props> = (props) => {
           {title ? `${title} | ${DEFAULT['title']}` : DEFAULT['title']}
         </title>
         <meta name="description" content={description} />
-        //TODO(eastasian) be able to change favicon by color mode
+        {/* TODO(eastasian) be able to change favicon by color mode */}
         <link rel="icon" href={FAVICON['light']} />
       </Head>
       <VStack

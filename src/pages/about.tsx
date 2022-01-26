@@ -37,12 +37,12 @@ const About: NextPage = () => {
                 toward goals by visualizing your actions by day.
               </Text>
               <Text>
-                With kabchi you won't forget your goals anymore. You won't give
-                up your goals anymore.
+                With kabchi you won&apos;t forget your goals anymore. You
+                won&apos;t give up your goals anymore.
               </Text>
               <Text>
-                You will stay motivated toward goals. Let's achieve your goals
-                with kabchi^^
+                You will stay motivated toward goals. Let&apos;s achieve your
+                goals with kabchi^^
               </Text>
             </DescriptionBlock>
           </Stack>
@@ -105,7 +105,7 @@ const About: NextPage = () => {
               socials={DEVELOPER['eastasian']['social'] as Social[]}
             />
             <Text align="center" fontSize="2xl">
-              I'm open for any collab ^^
+              I&apos;m open for any collab ^^
             </Text>
           </Stack>
         </Stack>
