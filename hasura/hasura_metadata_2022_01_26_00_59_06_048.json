@@ -1,0 +1,255 @@
+{
+  "resource_version": 53,
+  "metadata": {
+    "version": 3,
+    "sources": [
+      {
+        "name": "default",
+        "kind": "postgres",
+        "tables": [
+          {
+            "table": {
+              "schema": "public",
+              "name": "profiles"
+            },
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "uid": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "mail",
+                    "created_at",
+                    "updated_at",
+                    "uid"
+                  ],
+                  "backend_only": false
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "mail",
+                    "created_at",
+                    "updated_at",
+                    "uid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "mail",
+                    "created_at",
+                    "updated_at",
+                    "uid"
+                  ],
+                  "filter": {
+                    "uid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null
+                }
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {
+                    "uid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "schema": "public",
+              "name": "taggings"
+            },
+            "object_relationships": [
+              {
+                "name": "wall",
+                "using": {
+                  "foreign_key_constraint_on": "wall_id"
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "uid": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "uid",
+                    "wall_id"
+                  ],
+                  "backend_only": false
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "uid",
+                    "wall_id"
+                  ],
+                  "filter": {}
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "content",
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "uid",
+                    "wall_id"
+                  ],
+                  "filter": {
+                    "uid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null
+                }
+              }
+            ],
+            "delete_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "filter": {
+                    "uid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "table": {
+              "schema": "public",
+              "name": "walls"
+            },
+            "array_relationships": [
+              {
+                "name": "taggings",
+                "using": {
+                  "foreign_key_constraint_on": {
+                    "column": "wall_id",
+                    "table": {
+                      "schema": "public",
+                      "name": "taggings"
+                    }
+                  }
+                }
+              }
+            ],
+            "insert_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "check": {},
+                  "set": {
+                    "uid": "x-hasura-User-Id"
+                  },
+                  "columns": [
+                    "id",
+                    "title",
+                    "description",
+                    "created_at",
+                    "updated_at",
+                    "deleted",
+                    "uid"
+                  ],
+                  "backend_only": false
+                }
+              }
+            ],
+            "select_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "deleted",
+                    "description",
+                    "title",
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "uid"
+                  ],
+                  "filter": {}
+                }
+              }
+            ],
+            "update_permissions": [
+              {
+                "role": "user",
+                "permission": {
+                  "columns": [
+                    "deleted",
+                    "description",
+                    "title",
+                    "created_at",
+                    "updated_at",
+                    "id",
+                    "uid"
+                  ],
+                  "filter": {
+                    "uid": {
+                      "_eq": "X-Hasura-User-Id"
+                    }
+                  },
+                  "check": null
+                }
+              }
+            ]
+          }
+        ],
+        "configuration": {
+          "connection_info": {
+            "use_prepared_statements": false,
+            "database_url": {
+              "from_env": "PG_DATABASE_URL"
+            },
+            "isolation_level": "read-committed"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "dtdl-a063c",
+    "prod": "kabchi-prod"
+  }
+}
