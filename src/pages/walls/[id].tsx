@@ -92,7 +92,7 @@ const WallDetail: NextPage = () => {
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
-            {isIdleWall || isLoadingWall ? 'loading...' : wall.title}
+            {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
           </Text>
         </Flex>
         {/* TODO(eastasian) implement overview */}
