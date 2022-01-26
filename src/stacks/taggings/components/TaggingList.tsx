@@ -148,7 +148,7 @@ export const TaggingList: VFC<TaggingListProps> = (props) => {
 
   return (
     <Stack w="100%">
-      {taggings.length ? (
+      {taggings?.length ? (
         taggings.map((tagging, i) => (
           <TaggingListItem
             key={i}

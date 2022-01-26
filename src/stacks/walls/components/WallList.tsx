@@ -146,7 +146,7 @@ export const WallList: VFC<WallListProps> = (props) => {
 
   return (
     <Stack>
-      {walls.length ? (
+      {walls?.length ? (
         walls.map((wall, i) => {
           return (
             <WallListItem
