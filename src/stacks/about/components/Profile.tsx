@@ -38,7 +38,7 @@ export const Profile: VFC<ProfileProps> = (props) => {
         <Box mt="4">
           {socials?.map((social) => {
             return (
-              <a target="_blank" href={social.link}>
+              <a target="_blank" href={social.link} key={social.link}>
                 <Image
                   cursor="pointer"
                   h="8"

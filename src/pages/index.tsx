@@ -17,7 +17,7 @@ const Top: NextPage = () => {
 
   useEffect(() => {
     if (uid) router.push('/dashboard')
-  }, [uid])
+  }, [uid, router])
 
   return (
     <AppLayout
