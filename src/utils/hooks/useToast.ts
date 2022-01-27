@@ -1,4 +1,8 @@
-import { useToast as useChakraToast, UseToastOptions } from '@chakra-ui/react'
+import {
+  useToast as useChakraToast,
+  UseToastOptions,
+  ToastId,
+} from '@chakra-ui/react'
 
 const DEFAULT_OPTIONS: Partial<UseToastOptions> = {
   isClosable: false,
@@ -10,13 +14,13 @@ export const useToast = () => {
   const toast = useChakraToast()
 
   const showToast = (options: UseToastOptions = {}) => {
-    toast({
+    return toast({
       ...options,
     })
   }
 
   const showSuccessToast = (options: UseToastOptions = {}) => {
-    toast({
+    return toast({
       ...DEFAULT_OPTIONS,
       ...options,
       status: 'success',
@@ -24,16 +28,31 @@ export const useToast = () => {
   }
 
   const showErrorToast = (options: UseToastOptions = {}) => {
-    toast({
+    return toast({
       ...DEFAULT_OPTIONS,
       ...options,
       status: 'error',
     })
   }
 
+  const showInfoToast = (options: UseToastOptions = {}) => {
+    return toast({
+      ...DEFAULT_OPTIONS,
+      ...options,
+      status: 'info',
+    })
+  }
+
+  const closeToast = (id?: ToastId) => {
+    if (id) toast.close(id)
+    toast.closeAll()
+  }
+
   return {
     showToast,
     showSuccessToast,
     showErrorToast,
+    showInfoToast,
+    closeToast,
   }
 }

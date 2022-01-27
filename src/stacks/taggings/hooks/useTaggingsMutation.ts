@@ -8,7 +8,7 @@ import { Tagging } from 'classes'
 export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
   const queryClient = useQueryClient()
-  const { showErrorToast, showSuccessToast } = useToast()
+  const { showErrorToast, showSuccessToast, showInfoToast } = useToast()
 
   const queryDataKey = ['taggings', wallId, selectedDate]
   const createTaggingMutation = useMutation(
@@ -23,9 +23,13 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
           ...previouseTaggings,
           new Tagging(resTagging),
         ])
+        showSuccessToast({ title: 'created!' })
       },
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'creating...' })
       },
     }
   )
@@ -50,6 +54,9 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
       },
+      onMutate: () => {
+        showInfoToast({ title: 'updating...' })
+      },
     }
   )
 
@@ -69,6 +76,9 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
       },
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'deleting...' })
       },
     }
   )

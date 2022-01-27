@@ -8,7 +8,7 @@ import { Wall } from 'classes'
 export const useWallsMutation = () => {
   const { graphQLClient } = useGraphQLClient()
   const queryClient = useQueryClient()
-  const { showErrorToast, showSuccessToast } = useToast()
+  const { showErrorToast, showSuccessToast, showInfoToast } = useToast()
   const uid = selectUid()
 
   const createWallMutation = useMutation(
@@ -26,6 +26,9 @@ export const useWallsMutation = () => {
       },
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'creating...' })
       },
     }
   )
@@ -49,6 +52,9 @@ export const useWallsMutation = () => {
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
       },
+      onMutate: () => {
+        showInfoToast({ title: 'updating...' })
+      },
     }
   )
 
@@ -69,6 +75,9 @@ export const useWallsMutation = () => {
       },
       onError: () => {
         showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'deleting...' })
       },
     }
   )
