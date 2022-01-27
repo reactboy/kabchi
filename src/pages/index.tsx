@@ -23,7 +23,11 @@ const Top: NextPage = () => {
     <AppLayout
       maxW={WIDTH['app-wide']}
       header={{ logoSize: 0.75 }}
-      innerOptions={{ display: 'flex', flexDir: 'row', pt: 28 }}
+      innerOptions={{
+        display: 'flex',
+        flexDir: ['column-reverse', 'row'],
+        pt: [4, 28],
+      }}
     >
       {uid ? (
         <AppLayoutSkeleton />
@@ -36,16 +40,33 @@ const Top: NextPage = () => {
             bgSize="contain"
             width="100%"
             maxH="400px"
+            h={['300px', 'auto']}
+            mt={[8, 0]}
           />
           <Stack width="100%" spacing="8">
-            <Stack>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+            <Stack align={['center', 'flex-start']}>
+              <Box
+                as="p"
+                fontWeight="bold"
+                color="kbviolet.900"
+                fontSize={['3xl', '5xl']}
+              >
                 Manage your goals
               </Box>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+              <Box
+                as="p"
+                fontWeight="bold"
+                color="kbviolet.900"
+                fontSize={['3xl', '5xl']}
+              >
                 Record your progress
               </Box>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+              <Box
+                as="p"
+                fontWeight="bold"
+                color="kbviolet.900"
+                fontSize={['3xl', '5xl']}
+              >
                 Review your activities
               </Box>
               <Flex align="flex-end">

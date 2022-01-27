@@ -75,12 +75,16 @@ const WallDetail: NextPage = () => {
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
-        <Flex as={Heading} align="center">
+        <Flex
+          as={Heading}
+          align={['flex-start', 'center']}
+          flexDir={['column', 'row']}
+        >
           <Text
             as="span"
             color="kbpurple.900"
             cursor="pointer"
-            fontSize={44}
+            fontSize={[36, 44]}
             onClick={() => router.push('/dashboard')}
           >
             Walls
@@ -88,7 +92,7 @@ const WallDetail: NextPage = () => {
           <Text
             as="span"
             ml={2}
-            fontSize={40}
+            fontSize={[36, 40]}
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
@@ -120,6 +124,7 @@ const WallDetail: NextPage = () => {
           mt={4}
           w="100%"
           maxW={WIDTH['content-base']}
+          px={[2, 0]}
         >
           <HStack
             align="flex-start"
