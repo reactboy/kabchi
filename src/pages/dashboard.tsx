@@ -40,7 +40,7 @@ const Dashboard: NextPage = () => {
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
-        <Heading fontSize={44}>Walls</Heading>
+        <Heading fontSize={[36, 44]}>Walls</Heading>
         <Button onClick={onCreateOpen}>Create Wall</Button>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
