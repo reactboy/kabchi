@@ -69,7 +69,7 @@ const WallDetail: NextPage = () => {
 
   //   TODO(eastasian) implement overview
   //   const onClickOverview = () => {
-  //     alert('overview')
+  //       alert('overview')
   //   }
 
   return (

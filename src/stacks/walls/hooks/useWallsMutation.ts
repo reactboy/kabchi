@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query'
 
-import { useGraphQLClient } from 'utils/hooks'
+import { useGraphQLClient, useToast } from 'utils/hooks'
 import { selectUid } from 'redux/feature'
 import { CREATE_WALL, UPDATE_WALL, DELETE_WALL } from 'queries'
 import { Wall } from 'classes'
@@ -8,6 +8,7 @@ import { Wall } from 'classes'
 export const useWallsMutation = () => {
   const { graphQLClient } = useGraphQLClient()
   const queryClient = useQueryClient()
+  const { showErrorToast, showSuccessToast, showInfoToast } = useToast()
   const uid = selectUid()
 
   const createWallMutation = useMutation(
@@ -21,6 +22,13 @@ export const useWallsMutation = () => {
           ...previouseWalls,
           new Wall(res.insert_walls_one),
         ])
+        showSuccessToast({ title: 'wall created!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'creating...' })
       },
     }
   )
@@ -39,6 +47,13 @@ export const useWallsMutation = () => {
           return wall
         })
         queryClient.setQueryData(key, updatedWalls)
+        showSuccessToast({ title: 'wall updated!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'updating...' })
       },
     }
   )
@@ -56,6 +71,13 @@ export const useWallsMutation = () => {
           (wall) => wall.id !== resWall.id
         )
         queryClient.setQueryData(key, updatedWalls)
+        showSuccessToast({ title: 'wall deleted!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'deleting...' })
       },
     }
   )
