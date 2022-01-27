@@ -14,6 +14,8 @@ import { store } from 'redux/app'
 import { setUid, setAuthLoading } from 'redux/feature'
 import { auth, db } from 'utils/firebase'
 
+import { useToast } from '.'
+
 const HASURA_TOKEN_KEY = 'https://hasura.io/jwt/claims'
 let unsubUserMeta: null | (() => void) = null
 
@@ -64,15 +66,27 @@ export const useAuthChanged = () => {
 }
 
 export const useSignin = () => {
+  const { showErrorToast, showInfoToast, closeToast } = useToast()
   const signinWithGoogle = async () => {
     try {
+      showInfoToast({ title: 'signning in...', duration: 4500 })
       await signInWithPopup(auth, new GoogleAuthProvider())
     } catch (e) {
       console.log('google login error', e)
+      showErrorToast({ title: 'sign in cancelled...' })
+    } finally {
+      closeToast()
     }
   }
   const signinAnnonymously = async () => {
-    await signInAnonymously(auth)
+    try {
+      showInfoToast({ title: 'signning in...', duration: 4500 })
+      await signInAnonymously(auth)
+    } catch (e) {
+      showErrorToast({ title: 'sign in cancelled...' })
+    } finally {
+      closeToast()
+    }
   }
 
   return {
@@ -82,12 +96,14 @@ export const useSignin = () => {
 }
 
 export const useSignout = () => {
+  const { showInfoToast } = useToast()
   const router = useRouter()
   const signout = async () => {
     await signOut(auth)
     typeof unsubUserMeta === 'function' && unsubUserMeta()
     unsubUserMeta = null
     router.push('/')
+    showInfoToast({ title: 'signed out!' })
   }
 
   return {

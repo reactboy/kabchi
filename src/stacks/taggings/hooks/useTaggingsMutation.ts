@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient } from 'react-query'
 
 import { CREATE_TAGGING, UPDATE_TAGGING, DELETE_TAGGING } from 'queries'
-import { useGraphQLClient } from 'utils/hooks'
+import { useGraphQLClient, useToast } from 'utils/hooks'
 
 import { Tagging } from 'classes'
 
 export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
   const queryClient = useQueryClient()
+  const { showErrorToast, showSuccessToast, showInfoToast } = useToast()
 
   const queryDataKey = ['taggings', wallId, selectedDate]
   const createTaggingMutation = useMutation(
@@ -22,6 +23,13 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
           ...previouseTaggings,
           new Tagging(resTagging),
         ])
+        showSuccessToast({ title: 'created!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'creating...' })
       },
     }
   )
@@ -41,6 +49,13 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
             return tagging
           })
         )
+        showSuccessToast({ title: 'updated!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'updating...' })
       },
     }
   )
@@ -57,6 +72,13 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
           queryDataKey,
           previouseTaggings.filter((tagging) => tagging.id !== resTagging.id)
         )
+        showSuccessToast({ title: 'deleted!' })
+      },
+      onError: () => {
+        showErrorToast({ title: 'something went wrong...' })
+      },
+      onMutate: () => {
+        showInfoToast({ title: 'deleting...' })
       },
     }
   )
