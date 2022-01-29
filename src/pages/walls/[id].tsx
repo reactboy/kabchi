@@ -42,7 +42,7 @@ const WallDetail: NextPage = () => {
     updateTaggingMutation,
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
-  const { id: taggingId, content } = selectTaggingInput()
+  const { id: taggingId } = selectTaggingInput()
 
   const {
     isOpen: isCreateOpen,
@@ -177,8 +177,8 @@ const WallDetail: NextPage = () => {
           store.dispatch(resetTaggingInput())
           onCreateClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { content } = values
           createTaggingMutation.mutate({
             wallId: router.query.id as string,
             content,
@@ -193,8 +193,8 @@ const WallDetail: NextPage = () => {
           store.dispatch(resetTaggingInput())
           onEditClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { id: taggingId, content } = values
           updateTaggingMutation.mutate({
             taggingId,
             content,
