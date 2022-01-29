@@ -2,27 +2,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { useSelector } from 'react-redux'
 
 import { RootState } from 'redux/app'
-
+export type WallInput = {
+  id: string
+  title: string
+  description: string
+}
+export type TaggingInput = {
+  id: string
+  content: string
+}
 type State = {
-  wallInput: {
-    id: null | string
-    title: string
-    description: string
-  }
-  taggingInput: {
-    id: null | string
-    content: string
-  }
+  wallInput: WallInput
+  taggingInput: TaggingInput
 }
 
 const initWallInput = (): State['wallInput'] => ({
-  id: null,
+  id: '',
   title: '',
   description: '',
 })
 
 const initTaggingInput = (): State['taggingInput'] => ({
-  id: null,
+  id: '',
   content: '',
 })
 
