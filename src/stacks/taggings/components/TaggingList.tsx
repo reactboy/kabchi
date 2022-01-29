@@ -36,12 +36,15 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
       cb()
     }
 
+  const borderColor = useColorModeValue('kbgray.400', 'kbviolet.700')
+  const dateColor = useColorModeValue('kbpurple.400', 'kbbrown.400')
+
   return (
     <Stack
       w="100%"
       py={1}
       borderBottom="2px solid"
-      borderColor="kbgray.400"
+      borderColor={borderColor}
       spacing={1}
     >
       <Box>
@@ -50,7 +53,7 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
         </Text>
       </Box>
       <Flex justify="space-between">
-        <Text color="kbpurple.400" fontWeight="bold">
+        <Text color={dateColor} fontWeight="bold">
           {tagging.getCreatedAt('HH:mm')}
         </Text>
         <Stack minH="24px" direction="row" align="center">
