@@ -8,6 +8,9 @@ const styles = {
       bg: 'kbBgLight',
       color: 'kbviolet.900',
     },
+    'body::-webkit-scrollbar': {
+      display: 'none',
+    },
     '*, *::before, *::after': {
       color: 'inherit',
     },
