@@ -102,7 +102,7 @@ const fonts = {
 
 const config: ThemeConfig = {
   initialColorMode: 'light',
-  useSystemColorMode: true,
+  useSystemColorMode: false,
 }
 
 export const theme = extendTheme({ breakpoints, styles, colors, fonts, config })
