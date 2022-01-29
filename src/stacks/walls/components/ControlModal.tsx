@@ -24,7 +24,7 @@ import { selectWallInput, WallInput } from 'redux/feature'
 type ControlModalProps = {
   isOpen: UseDisclosureReturn['isOpen']
   onClose: UseDisclosureReturn['onClose']
-  onSubmit: (values: WallInput) => Promise<void>
+  onSubmit: (values: WallInput) => void
   submitText?: string
 }
 

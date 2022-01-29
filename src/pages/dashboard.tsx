@@ -69,7 +69,7 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onCreateClose()
         }}
-        onSubmit={async (values) => {
+        onSubmit={(values) => {
           const { title, description } = values
           createWallMutation.mutate({ title, description })
           store.dispatch(resetWallInput())
@@ -83,7 +83,7 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onEditClose()
         }}
-        onSubmit={async (values) => {
+        onSubmit={(values) => {
           const { id: wallId, title, description } = values
           updateWallMutation.mutate({ wallId, title, description })
           store.dispatch(resetWallInput())
