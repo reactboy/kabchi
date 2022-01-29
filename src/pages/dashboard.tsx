@@ -35,7 +35,7 @@ const Dashboard: NextPage = () => {
     onClose: onEditClose,
   } = useDisclosure()
 
-  const { id: wallId, title, description } = selectWallInput()
+  const { id: wallId } = selectWallInput()
 
   return (
     <AppLayout>
@@ -69,8 +69,8 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onCreateClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { title, description } = values
           createWallMutation.mutate({ title, description })
           store.dispatch(resetWallInput())
           onCreateClose()
@@ -83,8 +83,8 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onEditClose()
         }}
-        onSubmit={async (e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { id: wallId, title, description } = values
           updateWallMutation.mutate({ wallId, title, description })
           store.dispatch(resetWallInput())
           onEditClose()

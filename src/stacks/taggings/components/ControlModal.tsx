@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEventHandler, VFC } from 'react'
+import { VFC } from 'react'
 import {
   UseDisclosureReturn,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Textarea,
   HStack,
 } from '@chakra-ui/react'
+import { Formik } from 'formik'
 
 import {
   Modal,
@@ -15,49 +16,58 @@ import {
   ModalOverlay,
   Button,
 } from 'components/common'
-import { setTaggingInput, selectTaggingInput } from 'redux/feature'
-import { store } from 'redux/app'
+import { selectTaggingInput, TaggingInput } from 'redux/feature'
 
 type ControlModalProps = {
   isOpen: UseDisclosureReturn['isOpen']
   onClose: UseDisclosureReturn['onClose']
-  onSubmit: FormEventHandler
+  onSubmit: (values: TaggingInput) => void
   submitText?: string
 }
+
+const validate = (values) => {
+  const errors: { content?: string } = {}
+  if (!values.content) errors.content = 'Required'
+  return errors
+}
+
 export const ControlModal: VFC<ControlModalProps> = (props) => {
   const { isOpen, onClose, onSubmit, submitText = 'submit' } = props
   const taggingInput = selectTaggingInput()
 
-  const onChangeHandler =
-    (key: keyof typeof taggingInput) =>
-    (e: ChangeEvent<HTMLTextAreaElement>) => {
-      store.dispatch(
-        setTaggingInput({ ...taggingInput, [key]: e.target.value })
-      )
-    }
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent as="form" onSubmit={onSubmit}>
-        <ModalBody>
-          <FormControl>
-            <FormLabel fontSize={14} fontWeight="bold" color="kbpurple.900">
-              Comment
-            </FormLabel>
-            <Textarea
-              variant="filled"
-              value={taggingInput.content}
-              placeholder="what you done?"
-              onChange={onChangeHandler('content')}
-            />
-          </FormControl>
-        </ModalBody>
-        <ModalFooter as={HStack}>
-          <Button onClick={onClose}>close</Button>
-          <Button type="submit">{submitText}</Button>
-        </ModalFooter>
-      </ModalContent>
+      <Formik
+        initialValues={{ ...taggingInput }}
+        onSubmit={onSubmit}
+        validate={validate}
+      >
+        {(formik) => (
+          <ModalContent as="form" onSubmit={formik.handleSubmit}>
+            <ModalBody>
+              <FormControl>
+                <FormLabel fontSize={14} fontWeight="bold" color="kbpurple.900">
+                  Comment
+                </FormLabel>
+                <Textarea
+                  name="content"
+                  variant="filled"
+                  placeholder="what you done?"
+                  onChange={formik.handleChange}
+                  value={formik.values.content}
+                />
+              </FormControl>
+            </ModalBody>
+            <ModalFooter as={HStack}>
+              <Button onClick={onClose}>close</Button>
+              <Button disabled={!formik.dirty || !formik.isValid} type="submit">
+                {submitText}
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        )}
+      </Formik>
     </Modal>
   )
 }
