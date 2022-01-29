@@ -92,6 +92,7 @@ const colors = {
   kbBgDark: '#1A1F2B',
   kbBgLight: '#F7F7F7',
   kbwhite: '#FFFFFF',
+  kbblack: '#394353',
 }
 
 const fonts = {

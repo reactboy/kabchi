@@ -8,6 +8,7 @@ import {
   Box,
   Skeleton,
   SkeletonProps,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
@@ -39,13 +40,16 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
       cb()
     }
 
+  const bgColor = useColorModeValue('kbwhite', 'kbblack')
+  const borderColor = useColorModeValue('kbgray.400', 'kbviolet.500')
+
   return (
     <Flex
       justify="space-between"
       align="center"
-      bgColor="kbwhite"
+      bgColor={bgColor}
       border="1px solid"
-      borderColor="kbgray.400"
+      borderColor={borderColor}
       borderLeft="8px solid"
       borderLeftColor="kbpurple.900"
       borderRightRadius="4px"
@@ -114,13 +118,14 @@ type EmptyWallProps = {
 
 const EmptyWall: VFC<EmptyWallProps> = (props) => {
   const { onCreate, ...stackProps } = props
+  const textColor = useColorModeValue('kbviolet.700', 'kbviolet.100')
   return (
     <Stack direction="column" spacing={4} {...stackProps}>
       <Box>
-        <Text fontSize={24} fontWeight="bold" color="kbviolet.700">
-          You don't have Wall yet...
+        <Text fontSize={24} fontWeight="bold" color={textColor}>
+          You don&apos;t have Wall yet...
           <br />
-          Let's create one!
+          Let&apos;s create one!
         </Text>
       </Box>
       <Box>
