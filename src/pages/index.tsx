@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { Box, Stack, Flex, Text } from '@chakra-ui/react'
+import { Box, Stack, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { LinkIcon } from '@heroicons/react/solid'
 
 import { AppLayout, AppLayoutSkeleton } from 'components/layout'
@@ -14,6 +14,8 @@ const Top: NextPage = () => {
   const router = useRouter()
   const uid = selectUid()
   const { signinAnnonymously, signinWithGoogle } = useSignin()
+
+  const catchPhraseColor = useColorModeValue('kbviolet.900', 'kbpurple.100')
 
   useEffect(() => {
     if (uid) router.push('/dashboard')
@@ -48,7 +50,7 @@ const Top: NextPage = () => {
               <Box
                 as="p"
                 fontWeight="bold"
-                color="kbviolet.900"
+                color={catchPhraseColor}
                 fontSize={['3xl', '5xl']}
               >
                 Manage your goals
@@ -56,7 +58,7 @@ const Top: NextPage = () => {
               <Box
                 as="p"
                 fontWeight="bold"
-                color="kbviolet.900"
+                color={catchPhraseColor}
                 fontSize={['3xl', '5xl']}
               >
                 Record your progress
@@ -64,7 +66,7 @@ const Top: NextPage = () => {
               <Box
                 as="p"
                 fontWeight="bold"
-                color="kbviolet.900"
+                color={catchPhraseColor}
                 fontSize={['3xl', '5xl']}
               >
                 Review your activities
