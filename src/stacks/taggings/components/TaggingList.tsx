@@ -8,6 +8,7 @@ import {
   Box,
   Text,
   Flex,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 
@@ -110,13 +111,14 @@ type EmptyTaggingProps = {
 
 const EmptyTagging: VFC<EmptyTaggingProps> = (props) => {
   const { onCreate, isDateToday, ...stackProps } = props
+  const textColor = useColorModeValue('kbviolet.700', 'kbviolet.100')
   const emptyDisplayText = isDateToday
     ? "Let's record what you done today!"
     : 'no record for this day...'
   return (
     <Stack direction="column" spacing={4} {...stackProps}>
       <Box>
-        <Text fontSize={24} fontWeight="bold" color="kbviolet.700">
+        <Text fontSize={24} fontWeight="bold" color={textColor}>
           {emptyDisplayText}
         </Text>
       </Box>

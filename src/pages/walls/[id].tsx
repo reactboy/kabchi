@@ -8,6 +8,7 @@ import {
   Box,
   useDisclosure,
   Center,
+  useColorModeValue,
 } from '@chakra-ui/react'
 
 import { AppLayout } from 'components/layout'
@@ -72,6 +73,13 @@ const WallDetail: NextPage = () => {
   //       alert('overview')
   //   }
 
+  const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
+  const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
+  const dateControlDisabledColor = useColorModeValue(
+    'kbpurple.400',
+    'kbviolet.600'
+  )
+
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
@@ -129,10 +137,10 @@ const WallDetail: NextPage = () => {
           <HStack
             align="flex-start"
             spacing={4}
-            bgColor="kbwhite"
+            bgColor={dateControlBgColor}
             borderRadius="20"
             border="solid 1px"
-            borderColor="kbgray.100"
+            borderColor={dateControlBorder}
             px="2"
           >
             <Text
@@ -152,7 +160,7 @@ const WallDetail: NextPage = () => {
               disabled={isDateToday}
               onClick={onClickNext}
               _disabled={{
-                color: 'kbpurple.400',
+                color: dateControlDisabledColor,
               }}
             >
               {'>'}

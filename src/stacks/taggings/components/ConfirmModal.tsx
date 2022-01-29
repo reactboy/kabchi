@@ -1,5 +1,11 @@
 import { FC } from 'react'
-import { ModalBody, Text, UseDisclosureReturn, HStack } from '@chakra-ui/react'
+import {
+  ModalBody,
+  Text,
+  UseDisclosureReturn,
+  HStack,
+  useColorModeValue,
+} from '@chakra-ui/react'
 
 import {
   Button,
@@ -18,6 +24,8 @@ type ConfirmModalProps = {
 
 export const ConfirmModal: FC<ConfirmModalProps> = (props) => {
   const { isOpen, onClose, onConfirm, text } = props
+  const textColor = useColorModeValue('kbpurple.900', 'kbpurple.100')
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -27,7 +35,7 @@ export const ConfirmModal: FC<ConfirmModalProps> = (props) => {
             fontSize={20}
             fontWeight="semibold"
             whiteSpace="pre-wrap"
-            color="kbpurple.900"
+            color={textColor}
           >
             {text}
           </Text>
