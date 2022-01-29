@@ -7,6 +7,7 @@ import {
   Textarea,
   HStack,
   VStack,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Formik } from 'formik'
 
@@ -41,6 +42,8 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
   const { isOpen, onClose, onSubmit, submitText = 'submit' } = props
   const wallInput = selectWallInput()
 
+  const labelColor = useColorModeValue('kbpurple.900', 'kbpurple.100')
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -53,7 +56,7 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
           <ModalContent as="form" onSubmit={formik.handleSubmit}>
             <ModalBody as={VStack}>
               <FormControl>
-                <FormLabel fontSize={14} color="kbpurple.900" fontWeight="bold">
+                <FormLabel fontSize={14} color={labelColor} fontWeight="bold">
                   Title
                 </FormLabel>
                 <Input
@@ -65,7 +68,7 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel fontSize={14} color="kbpurple.900" fontWeight="bold">
+                <FormLabel fontSize={14} color={labelColor} fontWeight="bold">
                   Description
                 </FormLabel>
                 <Textarea

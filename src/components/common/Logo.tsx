@@ -1,4 +1,4 @@
-import { Box, BoxProps } from '@chakra-ui/react'
+import { Box, BoxProps, useColorMode } from '@chakra-ui/react'
 import { VFC } from 'react'
 
 type LogoSet<T = string> = {
@@ -41,11 +41,12 @@ type Props = {
 
 export const Logo: VFC<Props> = (props) => {
   const { logoType = 'text', ratio = 1, ...restProps } = props
+  const { colorMode } = useColorMode()
 
   //TODO(eastasian) to be able to switch styles of logo
   const mode = 'light'
 
-  const src = IMAGE[mode][logoType]
+  const src = IMAGE[colorMode][logoType]
   //NOTE(eastasian) appending 'px' to avoid confliction with chakra sizing system.
   const width = DIMENSION[logoType]['width'] * ratio + 'px'
   const height = DIMENSION[logoType]['height'] * ratio + 'px'
