@@ -17,16 +17,16 @@ export class Tagging {
   updatedAt: string
 
   constructor(data: TaggingData) {
-    this.id = data.id
-    this.uid = data.uid
-    this.wallId = data.wall_id
-    this.content = data.content
-    this.createdAt = data.created_at
-    this.updatedAt = data.updated_at
+    this.id = data.id || ''
+    this.uid = data.uid || ''
+    this.wallId = data.wall_id || ''
+    this.content = data.content || ''
+    this.createdAt = data.created_at || ''
+    this.updatedAt = data.updated_at || ''
   }
 
   isEdited = () => {
-    return isSameDate([this.createdAt, this.updatedAt])
+    return !isSameDate([this.createdAt, this.updatedAt])
   }
 
   getCreatedAt = (format: Parameters<typeof getDateText>[0]['format']) => {

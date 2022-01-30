@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import {
   Flex,
   HStack,
@@ -10,6 +11,7 @@ import {
   Center,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { DatabaseIcon } from '@heroicons/react/outline'
 
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
@@ -25,14 +27,22 @@ import {
   ConfirmModal,
   useTaggingsMutation,
   useTaggingsDate,
+  OverviewPanel,
 } from 'stacks/taggings'
 import { useWallByIdQuery } from 'stacks/walls'
 
 const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
-  const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
-    useTaggingsDate()
+  const {
+    selectedDate,
+    displayDate,
+    toPreviousDate,
+    toNextDate,
+    isDateToday,
+    selectedMonth,
+    toTargetDate,
+  } = useTaggingsDate()
   const {
     data: wall,
     isLoading: isLoadingWall,
@@ -43,6 +53,9 @@ const WallDetail: NextPage = () => {
     updateTaggingMutation,
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
+
+  const [isOverviewShow, setOverviewShow] = useState<boolean>(false)
+
   const { id: taggingId } = selectTaggingInput()
 
   const {
@@ -68,10 +81,9 @@ const WallDetail: NextPage = () => {
     toNextDate()
   }
 
-  //   TODO(eastasian) implement overview
-  //   const onClickOverview = () => {
-  //       alert('overview')
-  //   }
+  const onClickOverview = () => {
+    setOverviewShow(!isOverviewShow)
+  }
 
   const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
   const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
@@ -82,7 +94,7 @@ const WallDetail: NextPage = () => {
 
   return (
     <AppLayout>
-      <Flex justify="space-between" align="flex-end">
+      <Flex justify="space-between" align="center">
         <Flex
           as={Heading}
           align={['flex-start', 'center']}
@@ -107,9 +119,17 @@ const WallDetail: NextPage = () => {
             {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
           </Text>
         </Flex>
-        {/* TODO(eastasian) implement overview */}
-        {/* <Button onClick={onClickOverview}>overview</Button> */}
+        <button onClick={onClickOverview}>
+          <Box as={DatabaseIcon} w="32px" h="32px" />
+        </button>
       </Flex>
+      {isOverviewShow && (
+        <OverviewPanel
+          wallId={router.query.id as string}
+          month={selectedMonth}
+          toTargetDate={toTargetDate}
+        />
+      )}
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
           {displayDate}
