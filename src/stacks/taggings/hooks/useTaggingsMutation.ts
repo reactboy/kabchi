@@ -4,6 +4,7 @@ import { CREATE_TAGGING, UPDATE_TAGGING, DELETE_TAGGING } from 'queries'
 import { useGraphQLClient, useToast } from 'utils/hooks'
 
 import { Tagging } from 'classes'
+import { getDateText } from 'utils/date'
 
 export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
@@ -11,6 +12,12 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { showErrorToast, showSuccessToast, showInfoToast } = useToast()
 
   const queryDataKey = ['taggings', wallId, selectedDate]
+  const queryOverviewDataKey = [
+    'taggings',
+    wallId,
+    getDateText({ date: selectedDate, format: 'YYYY-MM' }),
+  ]
+
   const createTaggingMutation = useMutation(
     (data: { wallId: string; content: string }) =>
       graphQLClient.request(CREATE_TAGGING, data),
@@ -23,6 +30,14 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
           ...previouseTaggings,
           new Tagging(resTagging),
         ])
+
+        const previouseOverviewTaggings =
+          queryClient.getQueryData<Tagging[]>(queryOverviewDataKey)
+        queryClient.setQueryData(queryOverviewDataKey, [
+          ...previouseOverviewTaggings,
+          new Tagging(resTagging),
+        ])
+
         showSuccessToast({ title: 'created!' })
       },
       onError: () => {
@@ -72,6 +87,16 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
           queryDataKey,
           previouseTaggings.filter((tagging) => tagging.id !== resTagging.id)
         )
+
+        const previouseOverviewTaggings =
+          queryClient.getQueryData<Tagging[]>(queryOverviewDataKey)
+        queryClient.setQueryData(
+          queryOverviewDataKey,
+          previouseOverviewTaggings.filter(
+            (tagging) => tagging.id !== resTagging.id
+          )
+        )
+
         showSuccessToast({ title: 'deleted!' })
       },
       onError: () => {

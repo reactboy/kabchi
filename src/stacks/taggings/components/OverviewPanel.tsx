@@ -100,10 +100,10 @@ export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
     isError,
   } = useTaggingsMonthQuery(wallId, month)
 
-  if (isLoading) return <Skeleton />
+  if (isLoading) return <Skeleton minH="40px" />
   if (isError)
     return (
-      <Flex align="center" minH="100px">
+      <Flex align="center" minH="40px">
         something went wrong ...
       </Flex>
     )

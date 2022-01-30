@@ -54,7 +54,7 @@ const WallDetail: NextPage = () => {
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
 
-  const [isOverviewShow, setOverviewShow] = useState<boolean>(true)
+  const [isOverviewShow, setOverviewShow] = useState<boolean>(false)
 
   const { id: taggingId } = selectTaggingInput()
 
