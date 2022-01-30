@@ -1,5 +1,15 @@
 import { VFC } from 'react'
-import { Box, Flex, Tooltip, useColorModeValue } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Tooltip,
+  useColorModeValue,
+  Skeleton,
+  Text,
+} from '@chakra-ui/react'
+
+import { useTaggingsMonthQuery } from 'stacks/taggings'
+import { isSameDate, getDateText } from 'utils/date'
 
 type TrackStack = 'sm' | 'md' | 'lg'
 
@@ -71,66 +81,79 @@ const TrackMark: VFC<TrackMarkProps> = (props) => {
   )
 }
 
-const stubTracks = [
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.28', count: 1 },
-  { date: '2022.01.23', count: 1 },
-  { date: '2022.01.24', count: 3 },
-  { date: '2022.01.25', count: 6 },
-  { date: '2022.01.26', count: 3 },
-  { date: '2022.01.28', count: 1 },
-]
+type Track = {
+  date: string
+  count: number
+}
 
 type OverviewPanelProps = {
   month: string
   toTargetDate: (date: string) => void
+  wallId: string
 }
 
 export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
-  const { month, toTargetDate } = props
-  const tracks = stubTracks
+  const { month, toTargetDate, wallId } = props
+  const {
+    data: taggings,
+    isLoading,
+    isError,
+  } = useTaggingsMonthQuery(wallId, month)
 
-  console.log(month)
+  if (isLoading) return <Skeleton />
+  if (isError)
+    return (
+      <Flex align="center" minH="100px">
+        something went wrong ...
+      </Flex>
+    )
+
+  const tracks: Track[] = taggings.reduce((acc, current) => {
+    if (!acc.length)
+      return [
+        ...acc,
+        {
+          date: getDateText({ date: current.createdAt, format: 'YYYY-MM-DD' }),
+          count: 1,
+        },
+      ]
+
+    const latestTrack = acc[acc.length - 1]
+    const isSameDateTrack = isSameDate([latestTrack.date, current.createdAt])
+
+    if (!isSameDateTrack)
+      return [
+        ...acc,
+        {
+          date: getDateText({ date: current.createdAt, format: 'YYYY-MM-DD' }),
+          count: 1,
+        },
+      ]
+
+    latestTrack.count++
+    return acc
+  }, [])
 
   return (
-    <Flex align="center" minH="100px" flexWrap="wrap">
-      {tracks.map((track, key) => (
-        <Tooltip
-          label={track.date}
-          borderRadius={20}
-          bgColor="kbgray.400"
-          color="kbviolet.700"
-          fontWeight="bold"
-        >
-          <Box onClick={() => toTargetDate(track.date)}>
-            <TrackMark count={track.count} key={key} />
-          </Box>
-        </Tooltip>
-      ))}
+    <Flex align="center" minH="40px" flexWrap="wrap">
+      {tracks.length ? (
+        tracks.map((track, i) => (
+          <Tooltip
+            label={track.date}
+            borderRadius={20}
+            bgColor="kbgray.400"
+            color="kbviolet.700"
+            fontWeight="bold"
+            key={i}
+          >
+            <Box onClick={() => toTargetDate(track.date)}>
+              <TrackMark count={track.count} />
+            </Box>
+          </Tooltip>
+        ))
+      ) : (
+        <Text>no record for {month}..</Text>
+      )}
     </Flex>
   )
 }

@@ -58,7 +58,7 @@ export const isSameDate = (dates: DateArg[]) => {
   const d1 = initDayjs(dates[0])
   const d2 = initDayjs(dates[1])
 
-  return d1.isSame(d2)
+  return d1.isSame(d2, 'date')
 }
 
 export const getDayRange = (date: DateArg) => {
@@ -71,6 +71,22 @@ export const getDayRange = (date: DateArg) => {
 
 export const getDayRangeIso = (date: Parameters<typeof getDayRange>[0]) => {
   const { start, end } = getDayRange(date)
+  return {
+    start: start.toISOString(),
+    end: end.toISOString(),
+  }
+}
+
+export const getMonthRange = (date: DateArg) => {
+  const d = initDayjs(date)
+  return {
+    start: d.startOf('month'),
+    end: d.endOf('month'),
+  }
+}
+
+export const getMonthRangeIso = (date: Parameters<typeof getMonthRange>[0]) => {
+  const { start, end } = getMonthRange(date)
   return {
     start: start.toISOString(),
     end: end.toISOString(),

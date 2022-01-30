@@ -124,7 +124,11 @@ const WallDetail: NextPage = () => {
         </button>
       </Flex>
       {isOverviewShow && (
-        <OverviewPanel month={selectedMonth} toTargetDate={toTargetDate} />
+        <OverviewPanel
+          wallId={router.query.id as string}
+          month={selectedMonth}
+          toTargetDate={toTargetDate}
+        />
       )}
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
