@@ -10,6 +10,7 @@ import {
   Center,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
@@ -25,6 +26,7 @@ import {
   ConfirmModal,
   useTaggingsMutation,
   useTaggingsDate,
+  OverviewPanel,
 } from 'stacks/taggings'
 import { useWallByIdQuery } from 'stacks/walls'
 
@@ -43,6 +45,9 @@ const WallDetail: NextPage = () => {
     updateTaggingMutation,
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
+
+  const [isOverviewShow, setOverviewShow] = useState<boolean>(false)
+
   const { id: taggingId } = selectTaggingInput()
 
   const {
@@ -68,10 +73,9 @@ const WallDetail: NextPage = () => {
     toNextDate()
   }
 
-  //   TODO(eastasian) implement overview
-  //   const onClickOverview = () => {
-  //       alert('overview')
-  //   }
+  const onClickOverview = () => {
+    setOverviewShow(!isOverviewShow)
+  }
 
   const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
   const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
@@ -107,9 +111,9 @@ const WallDetail: NextPage = () => {
             {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
           </Text>
         </Flex>
-        {/* TODO(eastasian) implement overview */}
-        {/* <Button onClick={onClickOverview}>overview</Button> */}
+        <Button onClick={onClickOverview}>overview</Button>
       </Flex>
+      {isOverviewShow && <OverviewPanel />}
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
           {displayDate}
