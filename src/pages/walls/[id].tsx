@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import {
   Flex,
   HStack,
@@ -10,7 +11,7 @@ import {
   Center,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { DatabaseIcon } from '@heroicons/react/outline'
 
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
@@ -46,7 +47,7 @@ const WallDetail: NextPage = () => {
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
 
-  const [isOverviewShow, setOverviewShow] = useState<boolean>(false)
+  const [isOverviewShow, setOverviewShow] = useState<boolean>(true)
 
   const { id: taggingId } = selectTaggingInput()
 
@@ -86,7 +87,7 @@ const WallDetail: NextPage = () => {
 
   return (
     <AppLayout>
-      <Flex justify="space-between" align="flex-end">
+      <Flex justify="space-between" align="center">
         <Flex
           as={Heading}
           align={['flex-start', 'center']}
@@ -111,7 +112,9 @@ const WallDetail: NextPage = () => {
             {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
           </Text>
         </Flex>
-        <Button onClick={onClickOverview}>overview</Button>
+        <button onClick={onClickOverview}>
+          <Box as={DatabaseIcon} w="32px" h="32px" />
+        </button>
       </Flex>
       {isOverviewShow && <OverviewPanel />}
       <Flex>
