@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { Stack, Text } from '@chakra-ui/react'
+import { Stack, Text, useColorModeValue } from '@chakra-ui/react'
 
 import { Heading } from 'components/common'
 import { AppLayout } from 'components/layout'
@@ -8,13 +8,14 @@ import { DEVELOPER } from 'utils/constants'
 import { DescriptionBlock, Profile, Social } from 'stacks/about'
 
 const About: NextPage = () => {
+  const emphasizedTextColor = useColorModeValue('kbpurple.900', 'kbpurple.400')
   return (
     <AppLayout>
       <Stack spacing={12}>
         <Stack>
           <Heading alignSelf="flex-start">About</Heading>
           <Stack>
-            <Text fontSize={36} color="kbpurple.900">
+            <Text fontSize={36} color={emphasizedTextColor}>
               What is kabchi?
             </Text>
             <DescriptionBlock>
@@ -22,7 +23,7 @@ const About: NextPage = () => {
                 <Text
                   as="span"
                   fontSize="2xl"
-                  color="kbpurple.800"
+                  color={emphasizedTextColor}
                   pr="1"
                   fontWeight="bold"
                 >
@@ -47,7 +48,7 @@ const About: NextPage = () => {
             </DescriptionBlock>
           </Stack>
           <Stack>
-            <Text fontSize={36} color="kbpurple.900">
+            <Text fontSize={36} color={emphasizedTextColor}>
               How to use?
             </Text>
             <DescriptionBlock>
@@ -55,7 +56,7 @@ const About: NextPage = () => {
                 <Text
                   as="span"
                   fontSize="2xl"
-                  color="kbpurple.800"
+                  color={emphasizedTextColor}
                   fontWeight="bold"
                   pr="1"
                 >
