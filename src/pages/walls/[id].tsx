@@ -34,8 +34,15 @@ import { useWallByIdQuery } from 'stacks/walls'
 const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
-  const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
-    useTaggingsDate()
+  const {
+    selectedDate,
+    displayDate,
+    toPreviousDate,
+    toNextDate,
+    isDateToday,
+    selectedMonth,
+    toTargetDate,
+  } = useTaggingsDate()
   const {
     data: wall,
     isLoading: isLoadingWall,
@@ -116,7 +123,9 @@ const WallDetail: NextPage = () => {
           <Box as={DatabaseIcon} w="32px" h="32px" />
         </button>
       </Flex>
-      {isOverviewShow && <OverviewPanel />}
+      {isOverviewShow && (
+        <OverviewPanel month={selectedMonth} toTargetDate={toTargetDate} />
+      )}
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
           {displayDate}

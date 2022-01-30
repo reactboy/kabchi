@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export type DateTextFormat = 'YYYY-MM-DD' | 'MM-DD' | 'HH:mm'
+export type DateTextFormat = 'YYYY-MM-DD' | 'MM-DD' | 'HH:mm' | 'YYYY-MM'
 type DateArg = Date | string
 type BaseOptions = {
   date?: DateArg

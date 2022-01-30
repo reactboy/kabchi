@@ -105,21 +105,29 @@ const stubTracks = [
   { date: '2022.01.28', count: 1 },
 ]
 
-export const OverviewPanel: VFC = () => {
+type OverviewPanelProps = {
+  month: string
+  toTargetDate: (date: string) => void
+}
+
+export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
+  const { month, toTargetDate } = props
   const tracks = stubTracks
+
+  console.log(month)
 
   return (
     <Flex align="center" minH="100px" flexWrap="wrap">
-      {tracks.map((o, key) => (
+      {tracks.map((track, key) => (
         <Tooltip
-          label={o.date}
+          label={track.date}
           borderRadius={20}
           bgColor="kbgray.400"
           color="kbviolet.700"
           fontWeight="bold"
         >
-          <Box>
-            <TrackMark count={o.count} key={key} />
+          <Box onClick={() => toTargetDate(track.date)}>
+            <TrackMark count={track.count} key={key} />
           </Box>
         </Tooltip>
       ))}
