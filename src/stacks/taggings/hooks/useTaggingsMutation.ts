@@ -33,10 +33,12 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
 
         const previouseOverviewTaggings =
           queryClient.getQueryData<Tagging[]>(queryOverviewDataKey)
-        queryClient.setQueryData(queryOverviewDataKey, [
-          ...previouseOverviewTaggings,
-          new Tagging(resTagging),
-        ])
+        //NOTE(eastasian) only update if there is a cache
+        previouseOverviewTaggings &&
+          queryClient.setQueryData(queryOverviewDataKey, [
+            ...previouseOverviewTaggings,
+            new Tagging(resTagging),
+          ])
 
         showSuccessToast({ title: 'created!' })
       },
@@ -90,12 +92,15 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
 
         const previouseOverviewTaggings =
           queryClient.getQueryData<Tagging[]>(queryOverviewDataKey)
-        queryClient.setQueryData(
-          queryOverviewDataKey,
-          previouseOverviewTaggings.filter(
-            (tagging) => tagging.id !== resTagging.id
+        console.log(previouseOverviewTaggings)
+        //NOTE(eastasian) only update if there is a cache
+        previouseOverviewTaggings &&
+          queryClient.setQueryData(
+            queryOverviewDataKey,
+            previouseOverviewTaggings.filter(
+              (tagging) => tagging.id !== resTagging.id
+            )
           )
-        )
 
         showSuccessToast({ title: 'deleted!' })
       },
