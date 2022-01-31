@@ -8,7 +8,7 @@ import { getDayRangeIso, getMonthRangeIso } from 'utils/date'
 export const useTaggingsQuery = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
 
-  return useQuery(
+  return useQuery<Tagging[]>(
     ['taggings', wallId, selectedDate],
     async () => {
       const { start, end } = getDayRangeIso(selectedDate)
@@ -31,7 +31,7 @@ export const useTaggingsMonthQuery = (
 ) => {
   const { graphQLClient } = useGraphQLClient()
 
-  return useQuery(
+  return useQuery<Tagging[]>(
     ['taggings', wallId, selectedMonth],
     async () => {
       const { start, end } = getMonthRangeIso(selectedMonth)

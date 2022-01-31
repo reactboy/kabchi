@@ -92,6 +92,13 @@ type OverviewPanelProps = {
   wallId: string
 }
 
+const initTrack = (date: string): Track => {
+  return {
+    date: getDateText({ date, format: 'YYYY-MM-DD' }),
+    count: 1,
+  }
+}
+
 export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
   const { month, toTargetDate, wallId } = props
   const {
@@ -108,27 +115,13 @@ export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
       </Flex>
     )
 
-  const tracks: Track[] = taggings.reduce((acc, current) => {
-    if (!acc.length)
-      return [
-        ...acc,
-        {
-          date: getDateText({ date: current.createdAt, format: 'YYYY-MM-DD' }),
-          count: 1,
-        },
-      ]
+  const tracks = taggings.reduce<Track[]>((acc, current) => {
+    if (!acc.length) return [...acc, initTrack(current.createdAt)]
 
     const latestTrack = acc[acc.length - 1]
     const isSameDateTrack = isSameDate([latestTrack.date, current.createdAt])
 
-    if (!isSameDateTrack)
-      return [
-        ...acc,
-        {
-          date: getDateText({ date: current.createdAt, format: 'YYYY-MM-DD' }),
-          count: 1,
-        },
-      ]
+    if (!isSameDateTrack) return [...acc, initTrack(current.createdAt)]
 
     latestTrack.count++
     return acc
