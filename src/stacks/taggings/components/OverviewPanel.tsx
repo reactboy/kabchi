@@ -115,7 +115,7 @@ export const OverviewPanel: VFC<OverviewPanelProps> = (props) => {
       </Flex>
     )
 
-  const tracks: Track[] = taggings.reduce((acc, current) => {
+  const tracks = taggings.reduce<Track[]>((acc, current) => {
     if (!acc.length) return [...acc, initTrack(current.createdAt)]
 
     const latestTrack = acc[acc.length - 1]
