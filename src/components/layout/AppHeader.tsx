@@ -2,7 +2,7 @@ import { VFC } from 'react'
 import { useRouter } from 'next/router'
 import { Flex } from '@chakra-ui/react'
 
-import { Logo } from 'components/common'
+import { Logo, ColorModeButton } from 'components/common'
 import { selectUid } from 'redux/feature'
 
 type Props = {
@@ -16,12 +16,13 @@ export const AppHeader: VFC<Props> = (props) => {
   const path = uid ? '/dashboard' : '/'
 
   return (
-    <Flex w="100%">
+    <Flex w="100%" justify="space-between" align="center">
       <Logo
         ratio={logoSize}
         cursor="pointer"
         onClick={() => router.push(path)}
       />
+      <ColorModeButton />
     </Flex>
   )
 }

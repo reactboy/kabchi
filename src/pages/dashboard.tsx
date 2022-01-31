@@ -35,12 +35,12 @@ const Dashboard: NextPage = () => {
     onClose: onEditClose,
   } = useDisclosure()
 
-  const { id: wallId, title, description } = selectWallInput()
+  const { id: wallId } = selectWallInput()
 
   return (
     <AppLayout>
       <Flex justify="space-between" align="flex-end">
-        <Heading fontSize={44}>Walls</Heading>
+        <Heading fontSize={[36, 44]}>Walls</Heading>
         <Button onClick={onCreateOpen}>Create Wall</Button>
       </Flex>
       <Box maxW={WIDTH['content-base']} w="100%" mt={4} mx="auto">
@@ -69,8 +69,8 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onCreateClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { title, description } = values
           createWallMutation.mutate({ title, description })
           store.dispatch(resetWallInput())
           onCreateClose()
@@ -83,8 +83,8 @@ const Dashboard: NextPage = () => {
           store.dispatch(resetWallInput())
           onEditClose()
         }}
-        onSubmit={async (e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { id: wallId, title, description } = values
           updateWallMutation.mutate({ wallId, title, description })
           store.dispatch(resetWallInput())
           onEditClose()

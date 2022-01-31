@@ -28,15 +28,24 @@ export const useTaggingsDate = () => {
     )
   }
 
+  const toTargetDate = (date: string) => {
+    setSelectedDate(getDateText({ format: 'YYYY-MM-DD', date: new Date(date) }))
+  }
+
   return {
     selectedDate,
     displayDate: getDateText({
       date: new Date(selectedDate),
       format: 'MM-DD',
     }),
+    selectedMonth: getDateText({
+      date: new Date(selectedDate),
+      format: 'YYYY-MM',
+    }),
     toPreviousDate,
     toNextDate,
     isDatePast,
     isDateToday,
+    toTargetDate,
   }
 }

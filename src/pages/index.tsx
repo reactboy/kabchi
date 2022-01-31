@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { Box, Stack, Flex, Text } from '@chakra-ui/react'
+import { Box, Stack, Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { LinkIcon } from '@heroicons/react/solid'
 
 import { AppLayout, AppLayoutSkeleton } from 'components/layout'
@@ -15,6 +15,8 @@ const Top: NextPage = () => {
   const uid = selectUid()
   const { signinAnnonymously, signinWithGoogle } = useSignin()
 
+  const catchPhraseColor = useColorModeValue('kbviolet.900', 'kbpurple.100')
+
   useEffect(() => {
     if (uid) router.push('/dashboard')
   }, [uid, router])
@@ -23,7 +25,11 @@ const Top: NextPage = () => {
     <AppLayout
       maxW={WIDTH['app-wide']}
       header={{ logoSize: 0.75 }}
-      innerOptions={{ display: 'flex', flexDir: 'row', pt: 28 }}
+      innerOptions={{
+        display: 'flex',
+        flexDir: ['column-reverse', 'row'],
+        pt: [4, 28],
+      }}
     >
       {uid ? (
         <AppLayoutSkeleton />
@@ -36,16 +42,33 @@ const Top: NextPage = () => {
             bgSize="contain"
             width="100%"
             maxH="400px"
+            h={['300px', 'auto']}
+            mt={[8, 0]}
           />
           <Stack width="100%" spacing="8">
-            <Stack>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+            <Stack align={['center', 'flex-start']}>
+              <Box
+                as="p"
+                fontWeight="bold"
+                color={catchPhraseColor}
+                fontSize={['3xl', '5xl']}
+              >
                 Manage your goals
               </Box>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+              <Box
+                as="p"
+                fontWeight="bold"
+                color={catchPhraseColor}
+                fontSize={['3xl', '5xl']}
+              >
                 Record your progress
               </Box>
-              <Box as="p" fontWeight="bold" color="kbviolet.900" fontSize="5xl">
+              <Box
+                as="p"
+                fontWeight="bold"
+                color={catchPhraseColor}
+                fontSize={['3xl', '5xl']}
+              >
                 Review your activities
               </Box>
               <Flex align="flex-end">

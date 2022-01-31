@@ -6,6 +6,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { MenuAlt3Icon } from '@heroicons/react/solid'
 
@@ -20,14 +21,17 @@ export const AppNavigation = () => {
   const uid = selectUid()
   const path = uid ? '/dashboard' : '/'
 
+  const navigationBgColor = useColorModeValue('kbwhite', 'kbblack')
+  const navigationBorderColor = useColorModeValue('kbgray.100', 'kbviolet.500')
+
   return (
     <Flex
       w="100%"
       maxW={WIDTH['navigation-base']}
       justify="center"
-      bgColor="kbwhite"
+      bgColor={navigationBgColor}
       border="1px solid"
-      borderColor="kbgray.100"
+      borderColor={navigationBorderColor}
       borderBottom="none"
       borderTopRadius={['none', 'none', '100px']}
       transition="border-radius ease .2s"

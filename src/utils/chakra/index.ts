@@ -1,12 +1,19 @@
-import { extendTheme } from '@chakra-ui/react'
+import { extendTheme, ThemeConfig } from '@chakra-ui/react'
 import { createBreakpoints } from '@chakra-ui/theme-tools'
 import '@fontsource/lato'
 
 const styles = {
   global: (_props) => ({
-    'html, body': {
+    'body.chakra-ui-light': {
       bg: 'kbBgLight',
       color: 'kbviolet.900',
+    },
+    'body.chakra-ui-dark': {
+      bg: 'kbBgDark',
+      color: 'kbpurple.100',
+    },
+    'body::-webkit-scrollbar': {
+      display: 'none',
     },
     '*, *::before, *::after': {
       color: 'inherit',
@@ -82,8 +89,10 @@ const colors = {
     800: '#857071',
     900: '#796163',
   },
+  kbBgDark: '#1A1F2B',
   kbBgLight: '#F7F7F7',
   kbwhite: '#FFFFFF',
+  kbblack: '#394353',
 }
 
 const fonts = {
@@ -91,4 +100,9 @@ const fonts = {
   heading: "'Lato', sans-serif",
 }
 
-export const theme = extendTheme({ breakpoints, styles, colors, fonts })
+const config: ThemeConfig = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+}
+
+export const theme = extendTheme({ breakpoints, styles, colors, fonts, config })

@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
 import {
   Flex,
   HStack,
@@ -8,7 +9,9 @@ import {
   Box,
   useDisclosure,
   Center,
+  useColorModeValue,
 } from '@chakra-ui/react'
+import { DatabaseIcon } from '@heroicons/react/outline'
 
 import { AppLayout } from 'components/layout'
 import { Button } from 'components/common'
@@ -24,14 +27,22 @@ import {
   ConfirmModal,
   useTaggingsMutation,
   useTaggingsDate,
+  OverviewPanel,
 } from 'stacks/taggings'
 import { useWallByIdQuery } from 'stacks/walls'
 
 const WallDetail: NextPage = () => {
   useAuthRequired()
   const router = useRouter()
-  const { selectedDate, displayDate, toPreviousDate, toNextDate, isDateToday } =
-    useTaggingsDate()
+  const {
+    selectedDate,
+    displayDate,
+    toPreviousDate,
+    toNextDate,
+    isDateToday,
+    selectedMonth,
+    toTargetDate,
+  } = useTaggingsDate()
   const {
     data: wall,
     isLoading: isLoadingWall,
@@ -42,7 +53,10 @@ const WallDetail: NextPage = () => {
     updateTaggingMutation,
     deleteTaggingMutation,
   } = useTaggingsMutation(router.query.id as string, selectedDate)
-  const { id: taggingId, content } = selectTaggingInput()
+
+  const [isOverviewShow, setOverviewShow] = useState<boolean>(false)
+
+  const { id: taggingId } = selectTaggingInput()
 
   const {
     isOpen: isCreateOpen,
@@ -67,20 +81,30 @@ const WallDetail: NextPage = () => {
     toNextDate()
   }
 
-  //   TODO(eastasian) implement overview
-  //   const onClickOverview = () => {
-  //       alert('overview')
-  //   }
+  const onClickOverview = () => {
+    setOverviewShow(!isOverviewShow)
+  }
+
+  const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
+  const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
+  const dateControlDisabledColor = useColorModeValue(
+    'kbpurple.400',
+    'kbviolet.600'
+  )
 
   return (
     <AppLayout>
-      <Flex justify="space-between" align="flex-end">
-        <Flex as={Heading} align="center">
+      <Flex justify="space-between" align="center">
+        <Flex
+          as={Heading}
+          align={['flex-start', 'center']}
+          flexDir={['column', 'row']}
+        >
           <Text
             as="span"
             color="kbpurple.900"
             cursor="pointer"
-            fontSize={44}
+            fontSize={[36, 44]}
             onClick={() => router.push('/dashboard')}
           >
             Walls
@@ -88,16 +112,24 @@ const WallDetail: NextPage = () => {
           <Text
             as="span"
             ml={2}
-            fontSize={40}
+            fontSize={[36, 40]}
             fontWeight="normal"
             _before={{ content: '">"', mr: 2 }}
           >
             {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
           </Text>
         </Flex>
-        {/* TODO(eastasian) implement overview */}
-        {/* <Button onClick={onClickOverview}>overview</Button> */}
+        <button onClick={onClickOverview}>
+          <Box as={DatabaseIcon} w="32px" h="32px" />
+        </button>
       </Flex>
+      {isOverviewShow && (
+        <OverviewPanel
+          wallId={router.query.id as string}
+          month={selectedMonth}
+          toTargetDate={toTargetDate}
+        />
+      )}
       <Flex>
         <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
           {displayDate}
@@ -120,14 +152,15 @@ const WallDetail: NextPage = () => {
           mt={4}
           w="100%"
           maxW={WIDTH['content-base']}
+          px={[2, 0]}
         >
           <HStack
             align="flex-start"
             spacing={4}
-            bgColor="kbwhite"
+            bgColor={dateControlBgColor}
             borderRadius="20"
             border="solid 1px"
-            borderColor="kbgray.100"
+            borderColor={dateControlBorder}
             px="2"
           >
             <Text
@@ -147,7 +180,7 @@ const WallDetail: NextPage = () => {
               disabled={isDateToday}
               onClick={onClickNext}
               _disabled={{
-                color: 'kbpurple.400',
+                color: dateControlDisabledColor,
               }}
             >
               {'>'}
@@ -177,8 +210,8 @@ const WallDetail: NextPage = () => {
           store.dispatch(resetTaggingInput())
           onCreateClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { content } = values
           createTaggingMutation.mutate({
             wallId: router.query.id as string,
             content,
@@ -193,8 +226,8 @@ const WallDetail: NextPage = () => {
           store.dispatch(resetTaggingInput())
           onEditClose()
         }}
-        onSubmit={(e) => {
-          e.preventDefault()
+        onSubmit={(values) => {
+          const { id: taggingId, content } = values
           updateTaggingMutation.mutate({
             taggingId,
             content,

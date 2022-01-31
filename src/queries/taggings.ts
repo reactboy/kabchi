@@ -18,6 +18,26 @@ export const GET_TAGGINGS = gql`
   }
 `
 
+export const GET_TAGGINGS_MONTH_COUNT = gql`
+  query GetTaggingsMonthCount(
+    $wallId: uuid!
+    $start: timestamptz!
+    $end: timestamptz!
+  ) {
+    taggings(
+      order_by: { created_at: asc }
+      where: {
+        wall_id: { _eq: $wallId }
+        created_at: { _gte: $start, _lte: $end }
+      }
+    ) {
+      id
+      wall_id
+      created_at
+    }
+  }
+`
+
 export const CREATE_TAGGING = gql`
   mutation CreateTagging($wallId: uuid!, $content: String!) {
     insert_taggings_one(object: { wall_id: $wallId, content: $content }) {
