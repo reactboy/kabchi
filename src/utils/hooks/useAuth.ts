@@ -22,6 +22,7 @@ let unsubUserMeta: null | (() => void) = null
 const cookie = new Cookie()
 
 export const useAuthChanged = () => {
+  const { closeToast } = useToast()
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -41,6 +42,7 @@ export const useAuthChanged = () => {
               if (!hasuraClaimsSnap) return
               cookie.set('token', tokenSnap, { path: '/' })
               store.dispatch(setUid(user.uid))
+              closeToast()
             }
           )
           return
@@ -48,6 +50,7 @@ export const useAuthChanged = () => {
 
         cookie.set('token', token, { path: '/' })
         store.dispatch(setUid(user.uid))
+        closeToast()
       } else {
         //NOTE(eastasian) reset cache for every unauthenticated user.
         //TODO(eastasian) clear reqct query cache
@@ -66,26 +69,30 @@ export const useAuthChanged = () => {
 }
 
 export const useSignin = () => {
-  const { showErrorToast, showInfoToast, closeToast } = useToast()
+  const { showErrorToast, showInfoToast } = useToast()
   const signinWithGoogle = async () => {
     try {
-      showInfoToast({ title: 'signning in...', duration: 4500 })
+      showInfoToast({
+        title: 'signning in',
+        description: 'please wait this may take a few moments...',
+        duration: null,
+      })
       await signInWithPopup(auth, new GoogleAuthProvider())
     } catch (e) {
       console.log('google login error', e)
       showErrorToast({ title: 'sign in cancelled...' })
-    } finally {
-      closeToast()
     }
   }
   const signinAnnonymously = async () => {
     try {
-      showInfoToast({ title: 'signning in...', duration: 4500 })
+      showInfoToast({
+        title: 'signning in',
+        description: 'please wait this may take a few moments...',
+        duration: null,
+      })
       await signInAnonymously(auth)
     } catch (e) {
       showErrorToast({ title: 'sign in cancelled...' })
-    } finally {
-      closeToast()
     }
   }
 
