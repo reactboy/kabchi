@@ -43,10 +43,15 @@ export const CREATE_WALL = gql`
 `
 
 export const UPDATE_WALL = gql`
-  mutation UpdateWall($wallId: uuid!, $title: String!, $description: String!) {
+  mutation UpdateWall(
+    $wallId: uuid!
+    $title: String!
+    $description: String!
+    $updatedAt: timestamptz!
+  ) {
     update_walls_by_pk(
       pk_columns: { id: $wallId }
-      _set: { title: $title, description: $description }
+      _set: { title: $title, description: $description, updated_at: $updatedAt }
     ) {
       created_at
       deleted
@@ -60,10 +65,14 @@ export const UPDATE_WALL = gql`
 `
 
 export const DELETE_WALL = gql`
-  mutation UpdateWall($wallId: uuid!, $deleted: Boolean!) {
+  mutation UpdateWall(
+    $wallId: uuid!
+    $deleted: Boolean!
+    $updatedAt: timestamptz!
+  ) {
     update_walls_by_pk(
       pk_columns: { id: $wallId }
-      _set: { deleted: $deleted }
+      _set: { deleted: $deleted, updated_at: $updatedAt }
     ) {
       created_at
       deleted
