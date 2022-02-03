@@ -4,6 +4,7 @@ import { useGraphQLClient, useToast } from 'utils/hooks'
 import { selectUid } from 'redux/feature'
 import { CREATE_WALL, UPDATE_WALL, DELETE_WALL } from 'queries'
 import { Wall } from 'classes'
+import { getIsoString } from 'utils/date'
 
 export const useWallsMutation = () => {
   const { graphQLClient } = useGraphQLClient()
@@ -35,8 +36,10 @@ export const useWallsMutation = () => {
 
   const updateWallMutation = useMutation(
     (data: { wallId: string; title: string; description: string }) =>
-      // TODO(eastasian) set updated_at
-      graphQLClient.request(UPDATE_WALL, { ...data }),
+      graphQLClient.request(UPDATE_WALL, {
+        ...data,
+        updatedAt: getIsoString(),
+      }),
     {
       onSuccess: (res) => {
         const key = ['walls', uid]
@@ -60,8 +63,11 @@ export const useWallsMutation = () => {
 
   const deleteWallMutation = useMutation(
     (data: { wallId: string }) =>
-      // TODO(eastasian) set updated_at
-      graphQLClient.request(DELETE_WALL, { ...data, deleted: true }),
+      graphQLClient.request(DELETE_WALL, {
+        ...data,
+        deleted: true,
+        updatedAt: getIsoString(),
+      }),
     {
       onSuccess: (res) => {
         const key = ['walls', uid]

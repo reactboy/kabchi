@@ -51,10 +51,14 @@ export const CREATE_TAGGING = gql`
 `
 
 export const UPDATE_TAGGING = gql`
-  mutation Update_Tagging($taggingId: uuid!, $content: String!) {
+  mutation Update_Tagging(
+    $taggingId: uuid!
+    $content: String!
+    $updatedAt: timestamptz!
+  ) {
     update_taggings_by_pk(
       pk_columns: { id: $taggingId }
-      _set: { content: $content }
+      _set: { content: $content, updated_at: $updatedAt }
     ) {
       id
       wall_id
