@@ -1,6 +1,13 @@
 import { FC } from 'react'
 import Head from 'next/head'
-import { VStack, Flex, StackProps, FlexProps, Skeleton } from '@chakra-ui/react'
+import {
+  VStack,
+  Flex,
+  StackProps,
+  FlexProps,
+  Skeleton,
+  useColorMode,
+} from '@chakra-ui/react'
 
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
@@ -45,6 +52,8 @@ export const AppLayout: FC<Props> = (props) => {
     ...restProps
   } = props
 
+  const { colorMode } = useColorMode()
+
   const { uid, isLoading: isAuthLoading } = selectAuth()
 
   return (
@@ -54,8 +63,7 @@ export const AppLayout: FC<Props> = (props) => {
           {title ? `${title} | ${DEFAULT['title']}` : DEFAULT['title']}
         </title>
         <meta name="description" content={description} />
-        {/* TODO(eastasian) be able to change favicon by color mode */}
-        <link rel="icon" href={FAVICON['light']} />
+        <link rel="icon" href={FAVICON[colorMode]} />
       </Head>
       <VStack
         minH="100vh"

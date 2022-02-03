@@ -4,7 +4,7 @@ import { CREATE_TAGGING, UPDATE_TAGGING, DELETE_TAGGING } from 'queries'
 import { useGraphQLClient, useToast } from 'utils/hooks'
 
 import { Tagging } from 'classes'
-import { getDateText } from 'utils/date'
+import { getDateText, getIsoString } from 'utils/date'
 
 export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
   const { graphQLClient } = useGraphQLClient()
@@ -53,7 +53,10 @@ export const useTaggingsMutation = (wallId: string, selectedDate: string) => {
 
   const updateTaggingMutation = useMutation(
     (data: { taggingId: string; content: string }) =>
-      graphQLClient.request(UPDATE_TAGGING, data),
+      graphQLClient.request(UPDATE_TAGGING, {
+        ...data,
+        updatedAt: getIsoString(),
+      }),
     {
       onSuccess: (res) => {
         const resTagging = res.update_taggings_by_pk

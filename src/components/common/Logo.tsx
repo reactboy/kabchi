@@ -43,9 +43,6 @@ export const Logo: VFC<Props> = (props) => {
   const { logoType = 'text', ratio = 1, ...restProps } = props
   const { colorMode } = useColorMode()
 
-  //TODO(eastasian) to be able to switch styles of logo
-  const mode = 'light'
-
   const src = IMAGE[colorMode][logoType]
   //NOTE(eastasian) appending 'px' to avoid confliction with chakra sizing system.
   const width = DIMENSION[logoType]['width'] * ratio + 'px'
@@ -56,6 +53,7 @@ export const Logo: VFC<Props> = (props) => {
       w={width}
       height={height}
       bgImg={src}
+      bgRepeat="no-repeat"
       bgSize="contain"
       bgPosition="center"
       {...restProps}
