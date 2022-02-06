@@ -58,6 +58,8 @@ export const ControlModal: VFC<ControlModalProps> = (props) => {
                   placeholder="what you done?"
                   onChange={formik.handleChange}
                   value={formik.values.content}
+                  maxH="30vh"
+                  h="100vh"
                 />
               </FormControl>
             </ModalBody>
