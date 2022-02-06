@@ -41,7 +41,8 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
     }
 
   const bgColor = useColorModeValue('kbwhite', 'kbblack')
-  const borderColor = useColorModeValue('kbgray.400', 'kbviolet.500')
+  const borderColor = useColorModeValue('kbgray.400', 'transparent')
+  const borderHoverColor = useColorModeValue('blue.400', 'blue.200')
 
   return (
     <Flex
@@ -56,10 +57,12 @@ const WallListItem: VFC<WallListItemProps> = (props) => {
       minH={16}
       pl={2}
       pr={3}
-      transition="border-radius ease .4s"
       cursor="pointer"
+      transition="border ease .4s"
       _hover={{
-        borderRadius: '20px',
+        borderColor: borderHoverColor,
+        borderLeft: '12px solid',
+        borderLeftColor: 'kbpurple.900',
       }}
       onClick={onClickItemHandler(wall.id)}
     >

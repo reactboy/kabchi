@@ -20,6 +20,7 @@ import { store } from 'redux/app'
 import { selectTaggingInput } from 'redux/feature'
 import { useAuthRequired } from 'utils/hooks'
 import { resetTaggingInput } from 'redux/feature'
+import { getDateText } from 'utils/date'
 
 import {
   TaggingList,
@@ -86,55 +87,60 @@ const WallDetail: NextPage = () => {
   }
 
   const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
-  const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
+  const dateControlBorder = useColorModeValue('kbgray.100', 'transparent')
   const dateControlDisabledColor = useColorModeValue(
     'kbpurple.400',
     'kbviolet.600'
   )
+  const dateControlTextColor = useColorModeValue('kbpurple.900', 'kbpurple.500')
+
+  const headerBgColor = useColorModeValue('kbBgLight', 'kbBgDark')
 
   return (
     <AppLayout>
-      <Flex justify="space-between" align="center">
-        <Flex
-          as={Heading}
-          align={['flex-start', 'center']}
-          flexDir={['column', 'row']}
-        >
-          <Text
-            as="span"
-            color="kbpurple.900"
-            cursor="pointer"
-            fontSize={[36, 44]}
-            onClick={() => router.push('/dashboard')}
+      <Box position="sticky" top="40px" bgColor={headerBgColor}>
+        <Flex justify="space-between" align="center">
+          <Flex
+            as={Heading}
+            align={['flex-start', 'center']}
+            flexDir={['column', 'row']}
           >
-            Walls
-          </Text>
-          <Text
-            as="span"
-            ml={2}
-            fontSize={[36, 40]}
-            fontWeight="normal"
-            _before={{ content: '">"', mr: 2 }}
-          >
-            {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
+            <Text
+              as="span"
+              color="kbpurple.900"
+              cursor="pointer"
+              fontSize={[36, 44]}
+              onClick={() => router.push('/dashboard')}
+            >
+              Walls
+            </Text>
+            <Text
+              as="span"
+              ml={2}
+              fontSize={[36, 40]}
+              fontWeight="normal"
+              _before={{ content: '">"', mr: 2 }}
+            >
+              {isIdleWall || isLoadingWall ? 'loading...' : wall?.title}
+            </Text>
+          </Flex>
+          <button onClick={onClickOverview}>
+            <Box as={DatabaseIcon} w="32px" h="32px" />
+          </button>
+        </Flex>
+        {isOverviewShow && (
+          <OverviewPanel
+            wallId={router.query.id as string}
+            month={selectedMonth}
+            toTargetDate={toTargetDate}
+          />
+        )}
+        <Flex>
+          <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
+            {displayDate}
           </Text>
         </Flex>
-        <button onClick={onClickOverview}>
-          <Box as={DatabaseIcon} w="32px" h="32px" />
-        </button>
-      </Flex>
-      {isOverviewShow && (
-        <OverviewPanel
-          wallId={router.query.id as string}
-          month={selectedMonth}
-          toTargetDate={toTargetDate}
-        />
-      )}
-      <Flex>
-        <Text color="kbpurple.900" fontSize={28} fontWeight="bold">
-          {displayDate}
-        </Text>
-      </Flex>
+      </Box>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
         <TaggingList
           onCreate={onCreateOpen}
@@ -186,6 +192,24 @@ const WallDetail: NextPage = () => {
               {'>'}
             </Text>
           </HStack>
+          {!isDateToday && (
+            <Box
+              py="2"
+              px="4"
+              borderRadius="20"
+              cursor="pointer"
+              bgColor={dateControlBgColor}
+              border="solid 1px"
+              borderColor={dateControlBorder}
+              fontWeight="bold"
+              color={dateControlTextColor}
+              onClick={() =>
+                toTargetDate(getDateText({ format: 'YYYY-MM-DD' }))
+              }
+            >
+              jump to Today
+            </Box>
+          )}
           {isDateToday && <Button onClick={onCreateOpen}>Add</Button>}
         </Flex>
       </Center>
