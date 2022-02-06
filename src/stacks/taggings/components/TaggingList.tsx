@@ -15,7 +15,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/solid'
 import { Tagging } from 'classes'
 import { setTaggingInput } from 'redux/feature'
 import { store } from 'redux/app'
-import { Button, ErrorPlaceholder } from 'components/common'
+import { Button, ErrorPlaceholder, MarkdownView } from 'components/common'
 
 import { useTaggingsQuery } from '..'
 
@@ -36,8 +36,8 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
       cb()
     }
 
-  const borderColor = useColorModeValue('kbgray.400', 'kbviolet.700')
-  const dateColor = useColorModeValue('kbpurple.400', 'kbbrown.400')
+  const borderColor = useColorModeValue('kbgray.400', 'kbpurple.900')
+  const dateColor = useColorModeValue('kbpurple.400', 'kbpurple.600')
 
   return (
     <Stack
@@ -48,12 +48,10 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
       spacing={1}
     >
       <Box>
-        <Text fontSize={24} whiteSpace="pre-wrap">
-          {tagging.content}
-        </Text>
+        <MarkdownView children={tagging.content} />
       </Box>
-      <Flex justify="space-between">
-        <Text color={dateColor} fontWeight="bold">
+      <Flex justify="space-between" align="flex-end">
+        <Text color={dateColor} fontWeight="bold" fontSize={12}>
           {tagging.getCreatedAt('HH:mm')}
         </Text>
         <Stack minH="24px" direction="row" align="center">
