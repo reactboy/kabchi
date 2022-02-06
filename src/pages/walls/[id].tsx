@@ -86,7 +86,7 @@ const WallDetail: NextPage = () => {
   }
 
   const dateControlBgColor = useColorModeValue('kbwhite', 'kbblack')
-  const dateControlBorder = useColorModeValue('kbgray.100', 'kbviolet.500')
+  const dateControlBorder = useColorModeValue('kbgray.100', 'transparent')
   const dateControlDisabledColor = useColorModeValue(
     'kbpurple.400',
     'kbviolet.600'
