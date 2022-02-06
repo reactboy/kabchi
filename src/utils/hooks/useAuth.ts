@@ -69,29 +69,31 @@ export const useAuthChanged = () => {
 }
 
 export const useSignin = () => {
-  const { showErrorToast, showInfoToast } = useToast()
+  const { showErrorToast, showInfoToast, closeToast } = useToast()
   const signinWithGoogle = async () => {
+    const infoTosatId = showInfoToast({
+      title: 'signning in',
+      description: 'please wait this may take a few moments...',
+      duration: null,
+    })
     try {
-      showInfoToast({
-        title: 'signning in',
-        description: 'please wait this may take a few moments...',
-        duration: null,
-      })
       await signInWithPopup(auth, new GoogleAuthProvider())
     } catch (e) {
+      closeToast(infoTosatId)
       console.log('google login error', e)
       showErrorToast({ title: 'sign in cancelled...' })
     }
   }
   const signinAnnonymously = async () => {
+    const infoTosatId = showInfoToast({
+      title: 'signning in',
+      description: 'please wait this may take a few moments...',
+      duration: null,
+    })
     try {
-      showInfoToast({
-        title: 'signning in',
-        description: 'please wait this may take a few moments...',
-        duration: null,
-      })
       await signInAnonymously(auth)
     } catch (e) {
+      closeToast(infoTosatId)
       showErrorToast({ title: 'sign in cancelled...' })
     }
   }
