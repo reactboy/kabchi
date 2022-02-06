@@ -47,9 +47,9 @@ export const MarkdownView: VFC<Props> = (props) => {
               />
             </Link>
           ),
-          ul: ({ node, ...props }) => <UnorderedList pl={4} {...props} />,
-          ol: ({ node, ...props }) => <OrderedList pl={4} {...props} />,
-          li: ({ node, ...props }) => <ListItem {...props} />,
+          ul: ({ children }) => <UnorderedList pl={4} children={children} />,
+          ol: ({ children }) => <OrderedList pl={4} children={children} />,
+          li: ({ children }) => <ListItem children={children} />,
           ...(props.components || {}),
         }}
       />
