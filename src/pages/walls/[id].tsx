@@ -14,7 +14,7 @@ import {
 import { DatabaseIcon } from '@heroicons/react/outline'
 
 import { AppLayout } from 'components/layout'
-import { Button } from 'components/common'
+import { Button, TransitionWrapper } from 'components/common'
 import { WIDTH } from 'styles'
 import { store } from 'redux/app'
 import { selectTaggingInput } from 'redux/feature'
@@ -142,14 +142,16 @@ const WallDetail: NextPage = () => {
         </Flex>
       </Box>
       <Box maxW={WIDTH['content-base']} w="100%" mt={2} mx="auto">
-        <TaggingList
-          onCreate={onCreateOpen}
-          onDelete={onDeleteOpen}
-          onEdit={onEditOpen}
-          wallId={router.query.id as string}
-          isDateToday={isDateToday}
-          selectedDate={selectedDate}
-        />
+        <TransitionWrapper key={selectedDate}>
+          <TaggingList
+            onCreate={onCreateOpen}
+            onDelete={onDeleteOpen}
+            onEdit={onEditOpen}
+            wallId={router.query.id as string}
+            isDateToday={isDateToday}
+            selectedDate={selectedDate}
+          />
+        </TransitionWrapper>
       </Box>
       <Center position="fixed" bottom="20" left="0" w="100%">
         <Flex
