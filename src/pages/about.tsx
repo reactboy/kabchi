@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { Stack, Text, useColorModeValue } from '@chakra-ui/react'
 
-import { Heading } from 'components/common'
+import { Heading, Anchor } from 'components/common'
 import { AppLayout } from 'components/layout'
 import { DEVELOPER } from 'utils/constants'
 
@@ -85,15 +85,9 @@ const About: NextPage = () => {
           </Stack>
           <Text align="center">
             You can see source code of kabchi :{' '}
-            <Text
-              as="a"
-              href="https://github.com/reactboy/kabchi"
-              target="_blank"
-              color="blue.600"
-              textDecoration="underline"
-            >
+            <Anchor href="https://github.com/reactboy/kabchi">
               gtihub/reactboy/kabchi
-            </Text>
+            </Anchor>
           </Text>
         </Stack>
         <Stack>

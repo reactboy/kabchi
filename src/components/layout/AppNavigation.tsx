@@ -22,7 +22,7 @@ export const AppNavigation = () => {
   const path = uid ? '/dashboard' : '/'
 
   const navigationBgColor = useColorModeValue('kbwhite', 'kbblack')
-  const navigationBorderColor = useColorModeValue('kbgray.100', 'kbviolet.500')
+  const navigationBorderColor = useColorModeValue('kbgray.100', 'transparent')
 
   return (
     <Flex

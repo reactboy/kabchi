@@ -66,16 +66,16 @@ export const GoogleSignInButton: FC<Props> = (props) => {
   )
 }
 
-export const ColorModeButton: VFC<Props> = (props) => {
+export const ColorModeButton: VFC = () => {
   const { colorMode, toggleColorMode } = useColorMode()
   const size = '28px'
   return (
-    <Button {...props} onClick={toggleColorMode} p="0">
+    <button onClick={toggleColorMode}>
       {colorMode === 'light' ? (
         <Box as={MoonIcon} w={size} h={size} />
       ) : (
         <Box as={SunIcon} w={size} h={size} />
       )}
-    </Button>
+    </button>
   )
 }
