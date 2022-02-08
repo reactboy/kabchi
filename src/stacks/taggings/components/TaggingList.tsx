@@ -28,19 +28,13 @@ type TaggingListItemProps = {
 
 const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
   const { tagging, onDelete, onEdit, isEditable } = props
-  const onClickIconHandler =
-    (cb: () => void) =>
-    (e: MouseEvent<HTMLDivElement> & MouseEvent<SVGSVGElement>) => {
-      e.preventDefault()
-      e.stopPropagation()
-      cb()
-    }
 
   const borderColor = useColorModeValue('kbgray.400', 'kbpurple.900')
   const dateColor = useColorModeValue('kbpurple.400', 'kbpurple.600')
 
   return (
     <Stack
+      as="li"
       w="100%"
       py={1}
       borderBottom="2px solid"
@@ -56,35 +50,41 @@ const TaggingListItem: VFC<TaggingListItemProps> = (props) => {
         </Text>
         <Stack minH="24px" direction="row" align="center">
           {isEditable && (
-            <Box
-              as={PencilIcon}
-              w="24px"
-              h="24px"
-              transition="opacity ease .2s"
-              cursor="pointer"
-              _hover={{
-                opacity: 0.6,
-              }}
-              onClick={onClickIconHandler(() => {
+            <button
+              onClick={() => {
                 store.dispatch(setTaggingInput(tagging.getFormInput()))
                 onEdit()
-              })}
-            />
+              }}
+            >
+              <Box
+                as={PencilIcon}
+                w="24px"
+                h="24px"
+                transition="opacity ease .2s"
+                cursor="pointer"
+                _hover={{
+                  opacity: 0.6,
+                }}
+              />
+            </button>
           )}
-          <Box
-            as={TrashIcon}
-            w="20px"
-            h="20px"
-            transition="color ease .2s"
-            cursor="pointer"
-            _hover={{
-              color: 'red.400',
-            }}
-            onClick={onClickIconHandler(() => {
+          <button
+            onClick={() => {
               store.dispatch(setTaggingInput(tagging.getFormInput()))
               onDelete()
-            })}
-          />
+            }}
+          >
+            <Box
+              as={TrashIcon}
+              w="20px"
+              h="20px"
+              transition="color ease .2s"
+              cursor="pointer"
+              _hover={{
+                color: 'red.400',
+              }}
+            />
+          </button>
         </Stack>
       </Flex>
     </Stack>
@@ -150,7 +150,7 @@ export const TaggingList: VFC<TaggingListProps> = (props) => {
   if (isError) return <ErrorPlaceholder />
 
   return (
-    <Stack w="100%">
+    <Stack as="ul" w="100%">
       {taggings?.length ? (
         taggings.map((tagging, i) => (
           <TaggingListItem
