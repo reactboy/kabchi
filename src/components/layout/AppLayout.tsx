@@ -7,8 +7,10 @@ import {
   FlexProps,
   Skeleton,
   useColorMode,
+  Box,
 } from '@chakra-ui/react'
 
+import { TransitionWrapper } from 'components/common'
 import { AppHeader, AppNavigation } from 'components/layout'
 import { WIDTH } from 'styles'
 import { DEFAULT } from 'utils/constants'
@@ -75,9 +77,11 @@ export const AppLayout: FC<Props> = (props) => {
         maxW={maxW}
       >
         <AppHeader {...header} />
-        <Flex direction="column" flex="1" w="100%" {...innerOptions}>
-          {isAuthLoading ? <AppLayoutSkeleton /> : children}
-        </Flex>
+        <Box as={TransitionWrapper} w="100%">
+          <Flex direction="column" flex="1" w="100%" {...innerOptions}>
+            {isAuthLoading ? <AppLayoutSkeleton /> : children}
+          </Flex>
+        </Box>
         {uid && (
           <Flex position="fixed" bottom="0" left="0" w="100%" justify="center">
             <AppNavigation />

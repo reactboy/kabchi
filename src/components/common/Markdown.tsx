@@ -20,10 +20,10 @@ export const MarkdownView: VFC<Props> = (props) => {
         {...props}
         components={{
           h1: ({ node, ...props }) => (
-            <Heading as="h2" size="3xl" isTruncated {...props} />
+            <Heading as="h2" size="2xl" isTruncated {...props} />
           ),
           h2: ({ node, ...props }) => (
-            <Heading as="h2" size="2xl" isTruncated {...props} />
+            <Heading as="h2" size="xl" isTruncated {...props} />
           ),
           h3: ({ node, ...props }) => <Heading as="h3" size="lg" {...props} />,
           h4: ({ node, ...props }) => <Heading as="h4" size="md" {...props} />,

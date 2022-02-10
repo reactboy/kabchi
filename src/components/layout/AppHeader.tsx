@@ -25,6 +25,7 @@ export const AppHeader: VFC<Props> = (props) => {
       bgColor={headerBgColor}
       position="sticky"
       top="0"
+      zIndex="20"
     >
       <Logo
         ratio={logoSize}

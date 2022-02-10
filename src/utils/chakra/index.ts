@@ -22,7 +22,7 @@ const styles = {
 }
 
 const breakpoints = createBreakpoints({
-  sm: '400px',
+  sm: '520px',
   md: '700px',
   lg: '960px',
   xl: '1200px',

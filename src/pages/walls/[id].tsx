@@ -98,7 +98,7 @@ const WallDetail: NextPage = () => {
 
   return (
     <AppLayout>
-      <Box position="sticky" top="40px" bgColor={headerBgColor}>
+      <Box position="sticky" top="36px" bgColor={headerBgColor}>
         <Flex justify="space-between" align="center">
           <Flex
             as={Heading}
