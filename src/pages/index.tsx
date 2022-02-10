@@ -84,7 +84,7 @@ const Top: NextPage = () => {
                 </Flex>
               </Flex>
             </Stack>
-            <Stack direction="row">
+            <Stack direction="row" justify={['center', 'start']}>
               <GoogleSignInButton onClick={signinWithGoogle} />
               <GuestSignInButton onClick={signinAnnonymously} />
             </Stack>
